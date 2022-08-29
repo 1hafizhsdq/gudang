@@ -40,7 +40,6 @@
     <link href="{{asset('niceadmin')}}/assets/css/style.css" rel="stylesheet">
 
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
     @stack('css')
 </head>
 

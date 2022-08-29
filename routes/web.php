@@ -25,7 +25,7 @@ Auth::routes();
 // Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::post('/auth-login', [LoginController::class, 'loginApi'])->name('auth-login');
 
-Route::middleware(['auth'])->group(function () {
+Route::middleware(['auth', 'role:1,2,8'])->group(function () {
     // dashboard
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 });

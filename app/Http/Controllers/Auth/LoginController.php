@@ -6,7 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Validation\ValidationException;
@@ -115,5 +117,55 @@ class LoginController extends Controller
         $user = User::find($body->id);
 
         return $user;
+    }
+
+    // public function loged_out(Request $request){
+    //     $res = Http::post('http://127.0.0.1:8081/api/logout', [
+    //         'headers' => [
+    //             'Authorization' => 'Bearer '. Auth::user()->remember_token,
+    //             'Accept' => 'application/json',
+    //         ],
+    //     ]);
+
+    //     $response = json_decode($res->body());
+
+    //     if ($response->meta->code != 200) {
+    //         return back();
+    //     } else {
+    //         $this->logout($request);
+    //     }
+    // }
+
+    public function logout(Request $request)
+    {
+        // $res = Http::post('http://127.0.0.1:8081/api/logout', [
+        //     'headers' => [
+        //         'Authorization' => 'Bearer ' . Auth::user()->remember_token,
+        //         'Accept' => 'application/json',
+        //     ],
+        // ]);
+
+        // dd($res->body());
+        // $response = json_decode($res->body());
+
+        // if ($response->meta->code != 200) {
+        //     return back();
+        // } else {
+            User::where('id',Auth::user()->id)->update(['remember_token' => null]);
+
+            $this->guard()->logout();
+
+            $request->session()->invalidate();
+
+            $request->session()->regenerateToken();
+
+            if ($response = $this->loggedOut($request)) {
+                return $response;
+            }
+
+            return $request->wantsJson()
+            ? new JsonResponse([], 204)
+                : redirect('/');
+        // }
     }
 }

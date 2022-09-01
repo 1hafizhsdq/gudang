@@ -3,8 +3,10 @@
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\KategoriController;
+use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\SatuanController;
 use App\Http\Controllers\SupplierController;
+use App\Models\Project;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -45,4 +47,8 @@ Route::middleware(['auth', 'role:1'])->group(function () {
     // master supplier
     Route::resource('/supplier', SupplierController::class);
     Route::get('/list-supplier', [SupplierController::class, 'listSupplier'])->name('list-supplier');
+    
+    // master project
+    Route::resource('/project', ProjectController::class);
+    Route::get('/list-project', [ProjectController::class, 'listProject'])->name('list-project');
 });

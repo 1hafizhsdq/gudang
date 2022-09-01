@@ -1,0 +1,162 @@
+@extends('layouts.layout')
+
+@section('title', $title)
+
+@section('content')
+<div class="pagetitle">
+    <h1>{{ $title }}</h1>
+</div><!-- End Page Title -->
+
+<section class="section">
+    <div class="row">
+        <div class="col-lg-12">
+
+            <div class="card">
+                <div class="card-body">
+                    <button type="button" class="btn btn-primary mt-4 mb-4" id="add"><i class="bi bi-plus"></i> Tambah Project</button>
+                    <table class="table" id="datatable">
+                        <thead>
+                            <tr>
+                                <th scope="col" width="10%">#</th>
+                                <th scope="col">Kode</th>
+                                <th scope="col">Nama Project</th>
+                                <th scope="col">Alamat Project</th>
+                                <th scope="col">Nama Perusahaan</th>
+                                <th scope="col">Alamat Perusahaan</th>
+                                <th scope="col" width="20%">Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                    <!-- End Table with stripped rows -->
+                </div>
+            </div>
+        </div>
+    </div>
+    @includeIf('admin.project.form')
+</section>
+@endsection
+
+@push('script')
+<script>
+    $('#datatable').DataTable({
+        responsive: true,
+        processing: true,
+        serverSide: true,
+        ajax: {
+            url: '{{ route("list-project") }}',
+        },
+        columns: [
+            { data: 'DT_RowIndex', class: 'text-center'},
+            { data: 'kode_project'},
+            { data: 'nama_project'},
+            { data: 'alamat_project'},
+            { data: 'nama_perusahaan'},
+            { data: 'alamat_perusahaan'},
+            { data: 'aksi', class: 'text-center'}
+        ]
+    });
+
+    $(document).ready(function() {
+        $('#add').click(function(){
+            $('#form-project').find('input').val('');
+            $('#modal-project').modal('show');
+            $('.modal-title').html('Form Tambah Project');
+            $('#sv').html('Simpan');
+        });
+    }).on('click','#sv', function(){
+        var id = $('#id').val(),
+            url = '',
+            method = '';
+
+        var form = $('#form-project'),
+            data = form.serializeArray();
+
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $.ajax({
+            url: "{{route('project.store')}}",
+            method: "POST",
+            data: data,
+            beforeSend: function() {
+                $("#sv").replaceWith(`
+                    <button class="btn btn-primary" type="button" id="loading" disabled="">
+                        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                        Loading...
+                    </button>
+                `)
+            },
+            success: function(result) {
+                if (result.success) {
+                    successMsg(result.success)
+                    $('#modal-project').modal('hide');
+                    $('#form-project').find('input').val('');
+                    $('#datatable').DataTable().ajax.reload();
+                    $("#loading").replaceWith(`
+                        <button type="submit" id="sv" class="btn btn-primary">Simpan</button>
+                    `);
+                } else {
+                    errorMsg(result.errors)
+                    $("#loading").replaceWith(`
+                        <button type="submit" id="sv" class="btn btn-primary">Simpan</button>
+                    `);
+                }
+
+            },
+        });
+    });
+
+    function editData(id) {
+        var form = $('#form-project');
+        $.ajax({
+            url : 'project/' + id + '/edit',
+            type: 'GET',
+            success:function(result){
+                form.find('#id').val(result.id)
+                form.find('#nama_project').val(result.nama_project)
+                form.find('#alamat_project').val(result.alamat_project)
+                form.find('#nama_perusahaan').val(result.nama_perusahaan)
+                form.find('#alamat_perusahaan').val(result.alamat_perusahaan)
+                $('#modal-project').modal('show');
+                $('.modal-title').html('Form Edit Project');
+                $('#sv').html('Update');
+            }
+        });
+    }
+
+    function deleteData(id) {
+        Swal.fire({
+            icon: 'warning',
+            title: 'Apakah anda yakin akan menghapus data ini?',
+            showCancelButton: true,
+            confirmButtonText: 'Hapus',
+            confirmButtonColor: '#d3455b',
+            cancelButtonText: 'Batal',
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+                $.ajax({
+                    url: "project/" + id,
+                    method: 'DELETE',
+                    success: function(result) {
+                        if (result.success) {
+                            successMsg(result.success)
+                            $('#datatable').DataTable().ajax.reload();
+                        } else {
+                            errorMsg(result.errors)
+                        }
+                    }
+                });
+            }
+        });
+    }
+</script>
+@endpush

@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\KategoriController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -28,4 +29,10 @@ Route::post('/auth-login', [LoginController::class, 'loginApi'])->name('auth-log
 Route::middleware(['auth', 'role:1,2,8'])->group(function () {
     // dashboard
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+});
+
+Route::middleware(['auth', 'role:1'])->group(function () {
+    // master kategori
+    Route::resource('/kategori', KategoriController::class);
+    Route::get('/list-kategori', [KategoriController::class, 'listKategori'])->name('list-kategori');
 });

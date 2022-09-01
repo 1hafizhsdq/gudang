@@ -17,6 +17,11 @@
                         <i class="bi bi-circle"></i><span>Kategori</span>
                     </a>
                 </li>
+                <li>
+                    <a class="nav-link {{ ($title == 'Satuan') ? '' : 'collapsed' }}" href="{{ url('satuan') }}">
+                        <i class="bi bi-circle"></i><span>Satuan</span>
+                    </a>
+                </li>
             </ul>
         </li><!-- End Components Nav -->
         @endif

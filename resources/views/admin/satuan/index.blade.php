@@ -13,12 +13,12 @@
 
             <div class="card">
                 <div class="card-body">
-                    <button type="button" class="btn btn-primary mt-4 mb-4" id="add"><i class="bi bi-plus"></i> Tambah Kategori</button>
+                    <button type="button" class="btn btn-primary mt-4 mb-4" id="add"><i class="bi bi-plus"></i> Tambah Satuan</button>
                     <table class="table" id="datatable">
                         <thead>
                             <tr>
                                 <th scope="col" width="10%">#</th>
-                                <th scope="col">Kategori</th>
+                                <th scope="col">Satuan</th>
                                 <th scope="col" width="20%">Aksi</th>
                             </tr>
                         </thead>
@@ -30,7 +30,7 @@
             </div>
         </div>
     </div>
-    @includeIf('admin.kategori.form')
+    @includeIf('admin.satuan.form')
 </section>
 @endsection
 
@@ -41,20 +41,20 @@
         processing: true,
         serverSide: true,
         ajax: {
-            url: '{{ route("list-kategori") }}',
+            url: '{{ route("list-satuan") }}',
         },
         columns: [
             { data: 'DT_RowIndex', class: 'text-center'},
-            { data: 'kategori'},
+            { data: 'satuan'},
             { data: 'aksi', class: 'text-center'}
         ]
     });
 
     $(document).ready(function() {
         $('#add').click(function(){
-            $('#form-kategori').find('input').val('');
-            $('#modal-kategori').modal('show');
-            $('.modal-title').html('Form Tambah Kategori');
+            $('#form-satuan').find('input').val('');
+            $('#modal-satuan').modal('show');
+            $('.modal-title').html('Form Tambah Satuan');
             $('#sv').html('Simpan');
         });
     }).on('click','#sv', function(){
@@ -62,7 +62,7 @@
             url = '',
             method = '';
 
-        var form = $('#form-kategori'),
+        var form = $('#form-satuan'),
             data = form.serializeArray();
 
         $.ajaxSetup({
@@ -71,7 +71,7 @@
             }
         });
         $.ajax({
-            url: "{{route('kategori.store')}}",
+            url: "{{route('satuan.store')}}",
             method: "POST",
             data: data,
             beforeSend: function() {
@@ -85,8 +85,8 @@
             success: function(result) {
                 if (result.success) {
                     successMsg(result.success)
-                    $('#modal-kategori').modal('hide');
-                    $('#form-kategori').find('input').val('');
+                    $('#modal-satuan').modal('hide');
+                    $('#form-satuan').find('input').val('');
                     $('#datatable').DataTable().ajax.reload();
                     $("#loading").replaceWith(`
                         <button type="submit" id="sv" class="btn btn-primary">Simpan</button>
@@ -103,15 +103,15 @@
     });
 
     function editData(id) {
-        var form = $('#form-kategori');
+        var form = $('#form-satuan');
         $.ajax({
-            url : 'kategori/' + id + '/edit',
+            url : 'satuan/' + id + '/edit',
             type: 'GET',
             success:function(result){
                 form.find('#id').val(result.id)
-                form.find('#kategori').val(result.kategori)
-                $('#modal-kategori').modal('show');
-                $('.modal-title').html('Form Edit Kategori');
+                form.find('#satuan').val(result.satuan)
+                $('#modal-satuan').modal('show');
+                $('.modal-title').html('Form Edit Satuan');
                 $('#sv').html('Update');
             }
         });
@@ -133,7 +133,7 @@
                     }
                 });
                 $.ajax({
-                    url: "kategori/" + id,
+                    url: "satuan/" + id,
                     method: 'DELETE',
                     success: function(result) {
                         if (result.success) {

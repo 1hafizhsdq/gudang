@@ -3,6 +3,7 @@
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\KategoriController;
+use App\Http\Controllers\SatuanController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -35,4 +36,8 @@ Route::middleware(['auth', 'role:1'])->group(function () {
     // master kategori
     Route::resource('/kategori', KategoriController::class);
     Route::get('/list-kategori', [KategoriController::class, 'listKategori'])->name('list-kategori');
+    
+    // master satuan
+    Route::resource('/satuan', SatuanController::class);
+    Route::get('/list-satuan', [SatuanController::class, 'listSatuan'])->name('list-satuan');
 });

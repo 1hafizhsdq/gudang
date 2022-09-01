@@ -4,6 +4,7 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\KategoriController;
 use App\Http\Controllers\SatuanController;
+use App\Http\Controllers\SupplierController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -40,4 +41,8 @@ Route::middleware(['auth', 'role:1'])->group(function () {
     // master satuan
     Route::resource('/satuan', SatuanController::class);
     Route::get('/list-satuan', [SatuanController::class, 'listSatuan'])->name('list-satuan');
+    
+    // master supplier
+    Route::resource('/supplier', SupplierController::class);
+    Route::get('/list-supplier', [SupplierController::class, 'listSupplier'])->name('list-supplier');
 });

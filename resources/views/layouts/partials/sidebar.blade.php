@@ -22,6 +22,11 @@
                         <i class="bi bi-circle"></i><span>Satuan</span>
                     </a>
                 </li>
+                <li>
+                    <a class="nav-link {{ ($title == 'Supplier') ? '' : 'collapsed' }}" href="{{ url('supplier') }}">
+                        <i class="bi bi-circle"></i><span>Supplier</span>
+                    </a>
+                </li>
             </ul>
         </li><!-- End Components Nav -->
         @endif

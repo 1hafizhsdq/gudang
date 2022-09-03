@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\BarangController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\KategoriController;
 use App\Http\Controllers\ProjectController;
@@ -51,4 +52,12 @@ Route::middleware(['auth', 'role:1'])->group(function () {
     // master project
     Route::resource('/project', ProjectController::class);
     Route::get('/list-project', [ProjectController::class, 'listProject'])->name('list-project');
+    
+    // master barang
+    Route::resource('/barang', BarangController::class);
+    Route::get('/list-barang', [BarangController::class, 'listBarang'])->name('list-barang');
+    Route::post('/del-foto', [BarangController::class, 'delFoto'])->name('del-foto');
+    Route::post('/sku-store', [BarangController::class, 'storeSku'])->name('sku-store');
+    Route::get('/del-sku/{id}/{barang}', [BarangController::class, 'delSku'])->name('del-sku');
+    Route::get('/edit-sku/{id}', [BarangController::class, 'editSku'])->name('edit-sku');
 });

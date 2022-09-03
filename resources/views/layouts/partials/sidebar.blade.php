@@ -32,6 +32,11 @@
                         <i class="bi bi-circle"></i><span>Project</span>
                     </a>
                 </li>
+                <li>
+                    <a class="nav-link {{ ($title == 'Barang') ? '' : 'collapsed' }}" href="{{ url('barang') }}">
+                        <i class="bi bi-circle"></i><span>Barang</span>
+                    </a>
+                </li>
             </ul>
         </li><!-- End Components Nav -->
         @endif

@@ -190,7 +190,9 @@ class BarangController extends Controller
 
     public function destroy($id)
     {
-        //
+        Sku::where('barang_id',$id)->delete();
+        Barang::find($id)->delete();
+        return response()->json(['success' => 'Berhasil menghapus data']);
     }
 
     public function delFoto(Request $request){

@@ -58,102 +58,35 @@
         ]
     });
 
-    // $(document).ready(function() {
-    //     $('#add').click(function(){
-    //         $('#form-satuan').find('input').val('');
-    //         $('#modal-satuan').modal('show');
-    //         $('.modal-title').html('Form Tambah Satuan');
-    //         $('#sv').html('Simpan');
-    //     });
-    // }).on('click','#sv', function(){
-    //     var id = $('#id').val(),
-    //         url = '',
-    //         method = '';
-
-    //     var form = $('#form-satuan'),
-    //         data = form.serializeArray();
-
-    //     $.ajaxSetup({
-    //         headers: {
-    //             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-    //         }
-    //     });
-    //     $.ajax({
-    //         url: "{{route('satuan.store')}}",
-    //         method: "POST",
-    //         data: data,
-    //         beforeSend: function() {
-    //             $("#sv").replaceWith(`
-    //                 <button class="btn btn-primary" type="button" id="loading" disabled="">
-    //                     <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-    //                     Loading...
-    //                 </button>
-    //             `)
-    //         },
-    //         success: function(result) {
-    //             if (result.success) {
-    //                 successMsg(result.success)
-    //                 $('#modal-satuan').modal('hide');
-    //                 $('#form-satuan').find('input').val('');
-    //                 $('#datatable').DataTable().ajax.reload();
-    //                 $("#loading").replaceWith(`
-    //                     <button type="submit" id="sv" class="btn btn-primary">Simpan</button>
-    //                 `);
-    //             } else {
-    //                 errorMsg(result.errors)
-    //                 $("#loading").replaceWith(`
-    //                     <button type="submit" id="sv" class="btn btn-primary">Simpan</button>
-    //                 `);
-    //             }
-
-    //         },
-    //     });
-    // });
-
-    // function editData(id) {
-    //     var form = $('#form-satuan');
-    //     $.ajax({
-    //         url : 'satuan/' + id + '/edit',
-    //         type: 'GET',
-    //         success:function(result){
-    //             form.find('#id').val(result.id)
-    //             form.find('#satuan').val(result.satuan)
-    //             $('#modal-satuan').modal('show');
-    //             $('.modal-title').html('Form Edit Satuan');
-    //             $('#sv').html('Update');
-    //         }
-    //     });
-    // }
-
-    // function deleteData(id) {
-    //     Swal.fire({
-    //         icon: 'warning',
-    //         title: 'Apakah anda yakin akan menghapus data ini?',
-    //         showCancelButton: true,
-    //         confirmButtonText: 'Hapus',
-    //         confirmButtonColor: '#d3455b',
-    //         cancelButtonText: 'Batal',
-    //     }).then((result) => {
-    //         if (result.isConfirmed) {
-    //             $.ajaxSetup({
-    //                 headers: {
-    //                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-    //                 }
-    //             });
-    //             $.ajax({
-    //                 url: "satuan/" + id,
-    //                 method: 'DELETE',
-    //                 success: function(result) {
-    //                     if (result.success) {
-    //                         successMsg(result.success)
-    //                         $('#datatable').DataTable().ajax.reload();
-    //                     } else {
-    //                         errorMsg(result.errors)
-    //                     }
-    //                 }
-    //             });
-    //         }
-    //     });
-    // }
+    function deleteData(id) {
+        Swal.fire({
+            icon: 'warning',
+            title: 'Apakah anda yakin akan menghapus data ini?',
+            showCancelButton: true,
+            confirmButtonText: 'Hapus',
+            confirmButtonColor: '#d3455b',
+            cancelButtonText: 'Batal',
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+                $.ajax({
+                    url: "barang/" + id,
+                    method: 'DELETE',
+                    success: function(result) {
+                        if (result.success) {
+                            successMsg(result.success)
+                            $('#datatable').DataTable().ajax.reload();
+                        } else {
+                            errorMsg(result.errors)
+                        }
+                    }
+                });
+            }
+        });
+    }
 </script>
 @endpush

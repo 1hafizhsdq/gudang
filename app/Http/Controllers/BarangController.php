@@ -60,7 +60,7 @@ class BarangController extends Controller
             'merk' => 'required',
             'type' => 'required',
             'satuan_id' => 'required',
-            'foto' => 'required|max:2048|mimes:jpeg,jpg,png',
+            // 'foto' => 'required|max:2048|mimes:jpeg,jpg,png',
         ], [
             'kode_barang.required' => 'Kode Barang tidak boleh kosong!',
             'nama_barang.required' => 'Nama Barang tidak boleh kosong!',
@@ -68,34 +68,62 @@ class BarangController extends Controller
             'merk.required' => 'Merk tidak boleh kosong!',
             'type.required' => 'Type tidak boleh kosong!',
             'satuan_id.required' => 'Satuan tidak boleh kosong!',
-            'foto.required' => 'Foto tidak boleh kosong!',
-            'foto.max' => 'Ukuran maksimal foto 2MB!',
-            'foto.mimes' => 'Tipe file foto harus jpg atau png!',
+            // 'foto.required' => 'Foto tidak boleh kosong!',
+            // 'foto.max' => 'Ukuran maksimal foto 2MB!',
+            // 'foto.mimes' => 'Tipe file foto harus jpg atau png!',
         ]);
 
         if ($validator->fails()) {
             return response()->json(['errors' => $validator->errors()->all()]);
         } else {
-            $file = $request->file('foto');
-            $filename = time() . '_' . $file->getClientOriginalName();
-            $location = 'foto_barang';
-            $file->move($location, $filename);
+            if($request->id == null){
+                $file = $request->file('foto');
+                $filename = time() . '_' . $file->getClientOriginalName();
+                $location = 'foto_barang';
+                $file->move($location, $filename);
 
-            $barang = Barang::create([
-                'kode_barang' => $request->kode_barang,
-                'nama_barang' => $request->nama_barang,
-                'kategori_id' => $request->kategori_id,
-                'merk' => $request->merk,
-                'type' => $request->type,
-                'satuan_id' => $request->satuan_id,
-                'foto' => $filename,
-            ]);
+                $barang = Barang::create([
+                    'kode_barang' => $request->kode_barang,
+                    'nama_barang' => $request->nama_barang,
+                    'kategori_id' => $request->kategori_id,
+                    'merk' => $request->merk,
+                    'type' => $request->type,
+                    'satuan_id' => $request->satuan_id,
+                    'foto' => $filename,
+                ]);
 
-            return response()->json([
-                'success' => 'Berhasil menyimpan data.', 
-                'id' => $barang->id, 
-                'foto' => $filename
-            ]);
+                return response()->json([
+                    'success' => 'Berhasil menyimpan data.', 
+                    'id' => $barang->id, 
+                    'foto' => $filename
+                ]);
+            }else{
+                $data = [
+                    'kode_barang' => $request->kode_barang,
+                    'nama_barang' => $request->nama_barang,
+                    'kategori_id' => $request->kategori_id,
+                    'merk' => $request->merk,
+                    'type' => $request->type,
+                    'satuan_id' => $request->satuan_id,
+                ];
+                if($request->file('foto')){
+                    $file = $request->file('foto');
+                    $filename = time() . '_' . $file->getClientOriginalName();
+                    $location = 'foto_barang';
+                    $file->move($location, $filename);
+                    $data = array_merge($data,['foto' => $filename]);
+                }
+
+                $barang = Barang::where('id',$request->id)->update($data);
+
+                $data = Barang::find($request->id);
+
+                return response()->json([
+                    'success' => 'Berhasil menyimpan data.',
+                    'id' => $request->id,
+                    'foto' => $data->foto
+                ]);
+            }
         }
     }
 

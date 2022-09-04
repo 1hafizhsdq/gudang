@@ -138,11 +138,6 @@
                 $('.modal-title').html('Form Tambah SKU & Varian');
             }
         });
-
-        $('#sv-sku').click(function(){
-            
-        });
-
     }).on('click','#sv-sku',function(){
         var form = $('#form-sku'),
         data = form.serializeArray();
@@ -265,17 +260,22 @@
             data = new FormData(form[0]);
         
         var files = $('#foto')[0].files;
-        console.log(files)
+        
         if(files.length > 0){
+            alert(files[0].size)
             data.append('foto',files[0]);
         }
-        if(id == ''){
-            var url = "{{route('barang.store')}}",
-                method = "POST";
-        }else{
-            var url = "/barang/"+id+"",
-                method = "PUT";
-        }
+
+        // if(id == ''){
+        //     var url = "{{route('barang.store')}}",
+        //         method = "POST";
+        // }else{
+        //         var url = "/barang/"+id+"",
+        //         method = "PUT";
+        // }
+
+        var url = "{{route('barang.store')}}",
+            method = "POST";
         
         $.ajaxSetup({
             headers: {

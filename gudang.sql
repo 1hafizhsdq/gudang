@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 05, 2022 at 12:11 AM
+-- Generation Time: Sep 05, 2022 at 04:30 PM
 -- Server version: 10.4.22-MariaDB
 -- PHP Version: 8.1.2
 
@@ -68,6 +68,63 @@ CREATE TABLE `failed_jobs` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `history_stoks`
+--
+
+CREATE TABLE `history_stoks` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `user_id` bigint(20) UNSIGNED NOT NULL,
+  `status` int(11) NOT NULL COMMENT '1=masuk;2=keluar',
+  `keterangan` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `history_stoks`
+--
+
+INSERT INTO `history_stoks` (`id`, `user_id`, `status`, `keterangan`, `created_at`, `updated_at`) VALUES
+(8, 1, 1, 'kulak', '2022-09-05 07:19:24', '2022-09-05 07:19:24'),
+(9, 1, 2, 'project A', '2022-09-05 07:22:37', '2022-09-05 07:22:37'),
+(10, 1, 1, 'project A', '2022-09-05 07:25:34', '2022-09-05 07:26:16'),
+(11, 1, 2, 'hvbchd', '2022-09-05 07:26:39', '2022-09-05 07:26:39'),
+(12, 1, 2, 'nvjdn', '2022-09-05 07:28:08', '2022-09-05 07:28:08'),
+(13, 1, 2, 'knvn', '2022-09-05 07:28:50', '2022-09-05 07:28:50'),
+(14, 1, 2, 'kmkc', '2022-09-05 07:29:35', '2022-09-05 07:29:35'),
+(15, 1, 2, 'vkdmk', '2022-09-05 07:30:09', '2022-09-05 07:30:09');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `history_stok_details`
+--
+
+CREATE TABLE `history_stok_details` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `history_id` bigint(20) UNSIGNED NOT NULL,
+  `barang_id` bigint(20) UNSIGNED NOT NULL,
+  `sku_id` bigint(20) UNSIGNED NOT NULL,
+  `stok_baru` int(11) DEFAULT NULL,
+  `stok_bekas` int(11) DEFAULT NULL,
+  `update_stok_baru` int(11) DEFAULT NULL,
+  `update_stok_bekas` int(11) DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `history_stok_details`
+--
+
+INSERT INTO `history_stok_details` (`id`, `history_id`, `barang_id`, `sku_id`, `stok_baru`, `stok_bekas`, `update_stok_baru`, `update_stok_bekas`, `created_at`, `updated_at`) VALUES
+(3, 8, 13, 12, 0, 20, 0, 20, '2022-09-05 07:19:38', '2022-09-05 07:19:38'),
+(4, 9, 13, 12, 0, 10, 0, 10, '2022-09-05 07:23:06', '2022-09-05 07:23:06'),
+(5, 10, 13, 12, 0, 5, 0, 15, '2022-09-05 07:26:23', '2022-09-05 07:26:23');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `kategoris`
 --
 
@@ -112,7 +169,9 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (8, '2022_09_01_132830_create_suppliers_table', 4),
 (9, '2022_09_01_141652_create_projects_table', 5),
 (11, '2022_09_02_112850_create_barangs_table', 6),
-(13, '2022_09_03_141647_create_skus_table', 7);
+(13, '2022_09_03_141647_create_skus_table', 7),
+(14, '2022_09_05_105647_create_history_stoks_table', 8),
+(16, '2022_09_05_110227_create_history_stok_details_table', 9);
 
 -- --------------------------------------------------------
 
@@ -199,6 +258,16 @@ CREATE TABLE `skus` (
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- Dumping data for table `skus`
+--
+
+INSERT INTO `skus` (`id`, `barang_id`, `sku`, `varian`, `stok_baru`, `stok_bekas`, `created_at`, `updated_at`) VALUES
+(12, 13, 'sku 1', 'varian 1', 0, 15, '2022-09-05 06:04:51', '2022-09-05 07:26:23'),
+(13, 13, 'sku 2', 'varian 2', 0, 0, '2022-09-05 06:05:01', '2022-09-05 06:05:01'),
+(14, 14, 'cek 1', 'varian 1', 0, 0, '2022-09-05 06:05:26', '2022-09-05 06:05:26'),
+(15, 14, 'cek 2', 'varian 2', 0, 0, '2022-09-05 06:05:35', '2022-09-05 06:05:35');
+
 -- --------------------------------------------------------
 
 --
@@ -242,7 +311,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `username`, `email`, `email_verified_at`, `password`, `role`, `foto`, `remember_token`, `created_at`, `updated_at`) VALUES
-(1, 'super admin', 'superadmin', 'superadmin@gmail.com', NULL, '$2y$10$bUFMkeZoNwqR83OLuq.Y8.U6YaluTDmbA9giQvc3Y/xr.KmyXHUtC', 1, NULL, '29|lJdEg9xXp7RuDjOxMNhgIvObA2ktOXe1wkAWSRR6', '2022-08-29 05:43:56', '2022-09-04 03:56:33');
+(1, 'super admin', 'superadmin', 'superadmin@gmail.com', NULL, '$2y$10$W5Cs.tNkOtCNF0GuU37hXemx0KSZbuf4WILkV7fn/9DOjqb3BFg.S', 1, NULL, '31|m6NEFhznOGyHCIKJXlY7ieF0SP6WpYK056ezNRs0', '2022-08-29 05:43:56', '2022-09-05 04:36:49');
 
 --
 -- Indexes for dumped tables
@@ -262,6 +331,22 @@ ALTER TABLE `barangs`
 ALTER TABLE `failed_jobs`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `failed_jobs_uuid_unique` (`uuid`);
+
+--
+-- Indexes for table `history_stoks`
+--
+ALTER TABLE `history_stoks`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `history_stoks_user_id_foreign` (`user_id`);
+
+--
+-- Indexes for table `history_stok_details`
+--
+ALTER TABLE `history_stok_details`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `history_stok_details_history_id_foreign` (`history_id`),
+  ADD KEY `history_stok_details_barang_id_foreign` (`barang_id`),
+  ADD KEY `history_stok_details_sku_id_foreign` (`sku_id`);
 
 --
 -- Indexes for table `kategoris`
@@ -338,6 +423,18 @@ ALTER TABLE `failed_jobs`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `history_stoks`
+--
+ALTER TABLE `history_stoks`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+
+--
+-- AUTO_INCREMENT for table `history_stok_details`
+--
+ALTER TABLE `history_stok_details`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
 -- AUTO_INCREMENT for table `kategoris`
 --
 ALTER TABLE `kategoris`
@@ -347,7 +444,7 @@ ALTER TABLE `kategoris`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT for table `personal_access_tokens`
@@ -371,7 +468,7 @@ ALTER TABLE `satuans`
 -- AUTO_INCREMENT for table `skus`
 --
 ALTER TABLE `skus`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `suppliers`
@@ -395,6 +492,20 @@ ALTER TABLE `users`
 ALTER TABLE `barangs`
   ADD CONSTRAINT `barangs_kategori_id_foreign` FOREIGN KEY (`kategori_id`) REFERENCES `kategoris` (`id`),
   ADD CONSTRAINT `barangs_satuan_id_foreign` FOREIGN KEY (`satuan_id`) REFERENCES `satuans` (`id`);
+
+--
+-- Constraints for table `history_stoks`
+--
+ALTER TABLE `history_stoks`
+  ADD CONSTRAINT `history_stoks_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
+
+--
+-- Constraints for table `history_stok_details`
+--
+ALTER TABLE `history_stok_details`
+  ADD CONSTRAINT `history_stok_details_barang_id_foreign` FOREIGN KEY (`barang_id`) REFERENCES `barangs` (`id`),
+  ADD CONSTRAINT `history_stok_details_history_id_foreign` FOREIGN KEY (`history_id`) REFERENCES `history_stoks` (`id`),
+  ADD CONSTRAINT `history_stok_details_sku_id_foreign` FOREIGN KEY (`sku_id`) REFERENCES `skus` (`id`);
 
 --
 -- Constraints for table `skus`

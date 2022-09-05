@@ -7,6 +7,7 @@ use App\Http\Controllers\KategoriController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\SatuanController;
 use App\Http\Controllers\SupplierController;
+use App\Http\Controllers\TransaksiController;
 use App\Models\Project;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -60,4 +61,13 @@ Route::middleware(['auth', 'role:1'])->group(function () {
     Route::post('/sku-store', [BarangController::class, 'storeSku'])->name('sku-store');
     Route::get('/del-sku/{id}/{barang}', [BarangController::class, 'delSku'])->name('del-sku');
     Route::get('/edit-sku/{id}', [BarangController::class, 'editSku'])->name('edit-sku');
+});
+
+Route::middleware(['auth'])->group(function () {
+    // master transaksi stok
+    Route::get('/tr-stok', [TransaksiController::class, 'index'])->name('tr-stok');
+    Route::post('/post-tr-stok', [TransaksiController::class, 'store'])->name('post-tr-stok');
+    Route::get('/get-sku/{id}', [TransaksiController::class, 'getSku'])->name('get-sku');
+    Route::get('/get-stok-now/{id}', [TransaksiController::class, 'getStok'])->name('get-stok-now');
+    Route::post('/post-barang', [TransaksiController::class, 'storeBarang'])->name('post-barang');
 });

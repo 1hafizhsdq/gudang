@@ -19,4 +19,9 @@ class Barang extends Model
     {
         return $this->belongsTo(Kategori::class, 'kategori_id');
     }
+
+    public function sku()
+    {
+        return $this->hasMany(Sku::class);
+    }
 }

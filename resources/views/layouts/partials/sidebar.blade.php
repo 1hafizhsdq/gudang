@@ -39,6 +39,12 @@
                 </li>
             </ul>
         </li><!-- End Components Nav -->
+        <li class="nav-item">
+            <a class="nav-link {{ ($title == 'Transaksi Stok') ? '' : 'collapsed' }}" href="{{ url('tr-stok') }}">
+                <i class="bi bi-grid"></i>
+                <span>Transaksi Stok</span>
+            </a>
+        </li>
         @endif
     </ul>
 </aside>

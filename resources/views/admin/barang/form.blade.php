@@ -262,7 +262,6 @@
         var files = $('#foto')[0].files;
         
         if(files.length > 0){
-            alert(files[0].size)
             data.append('foto',files[0]);
         }
 

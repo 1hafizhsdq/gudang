@@ -9,4 +9,14 @@ class Sku extends Model
 {
     use HasFactory;
     protected $guarded = [];
+
+    public function historyStokDetail()
+    {
+        return $this->hasMany(HistoryStokDetail::class);
+    }
+
+    public function barang()
+    {
+        return $this->belongsTo(Barang::class, 'barang_id');
+    }
 }

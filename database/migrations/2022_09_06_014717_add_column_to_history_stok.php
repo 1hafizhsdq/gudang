@@ -14,6 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::table('history_stoks', function (Blueprint $table) {
+            $table->date('no_surat_jalan')->nullable();
             $table->date('tanggal')->nullable();
             $table->text('deskripsi')->nullable();
             $table->unsignedBigInteger('project_id')->nullable();
@@ -31,7 +32,13 @@ return new class extends Migration
     public function down()
     {
         Schema::table('history_stoks', function (Blueprint $table) {
-            //
+            $table->date('no_surat_jalan')->nullable();
+            $table->date('tanggal')->nullable();
+            $table->text('deskripsi')->nullable();
+            $table->unsignedBigInteger('project_id')->nullable();
+            $table->string('driver')->nullable();
+            $table->string('nopol')->nullable();
+            $table->string('penerima')->nullable();
         });
     }
 };

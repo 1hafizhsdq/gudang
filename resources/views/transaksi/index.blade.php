@@ -20,7 +20,7 @@
                     <form class="mt-3" id="form-transaksi">
                         @csrf
                         <input type="hidden" name="id" id="id" value="">
-                        <input type="hidden" name="user_id" id="user_id" value="{{ Auth::user()->id }}">
+                        {{-- <input type="hidden" name="user_id" id="user_id" value="{{ Auth::user()->id }}"> --}}
                         <div class="row">
                             <div class="col">
                                 <div class="row mb-3">
@@ -33,12 +33,7 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class="row mb-3">
-                                    <label for="keterangan" class="col-sm-3 col-form-label">Keterangan</label>
-                                    <div class="col-sm-9">
-                                        <textarea class="form-control" style="height: 100px" name="keterangan" id="keterangan" placeholder="keterangan"></textarea>
-                                    </div>
-                                </div>
+                                <div class="form-dynamic"></div>
                                 <div class="row mb-3">
                                     <a id="sv" class="btn btn-primary">Simpan</a>
                                 </div>
@@ -236,6 +231,17 @@
             }
         });
         
+    }).on('change','#status',function(){
+        var status = $(this).val();
+
+        $.ajax({
+            url: '/get-form/'+status+'',
+            method: 'GET',
+            success: function(result) {
+                $('.form-dynamic').html(result.content)
+            },
+        });
+
     });
 </script>
 @endpush

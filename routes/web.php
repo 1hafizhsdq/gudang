@@ -70,4 +70,5 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/get-sku/{id}', [TransaksiController::class, 'getSku'])->name('get-sku');
     Route::get('/get-stok-now/{id}', [TransaksiController::class, 'getStok'])->name('get-stok-now');
     Route::post('/post-barang', [TransaksiController::class, 'storeBarang'])->name('post-barang');
+    Route::get('/get-form/{status}', [TransaksiController::class, 'getForm'])->name('get-form');
 });

@@ -176,11 +176,12 @@
         }).then((result) => {
             if (result.isConfirmed) {
                 if(tipe == 2){
-                    if(gudang_bekas < bekas){
-                        errorMsg("stok barang di gudang lebih kecil, silahkan turunkan jumlah anda!");
+                    if(parseInt(bekas) > parseInt(gudang_bekas)){
+                        errorMsg("stok barang bekas di gudang lebih kecil, silahkan turunkan jumlah anda!");
                         return false;
-                    }else if(gudang_baru < baru){
-                        errorMsg("stok barang di gudang lebih kecil, silahkan turunkan jumlah anda!");
+                    }
+                    if(parseInt(gudang_baru) < parseInt(baru)){
+                        errorMsg("stok barang baru di gudang lebih kecil, silahkan turunkan jumlah anda!");
                         return false;
                     }
                 }

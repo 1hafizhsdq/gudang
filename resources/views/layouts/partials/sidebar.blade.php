@@ -45,6 +45,12 @@
                 <span>Transaksi Stok</span>
             </a>
         </li>
+        <li class="nav-item">
+            <a class="nav-link {{ ($title == 'Cek Stok') ? '' : 'collapsed' }}" href="{{ url('cek-stok') }}">
+                <i class="bi bi-search"></i>
+                <span>Cek Stok</span>
+            </a>
+        </li>
         @endif
     </ul>
 </aside>

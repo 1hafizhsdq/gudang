@@ -31,6 +31,11 @@ class BarangController extends Controller
                 <a href="javascript:void(0)" id="btn-delete" onclick="deleteData(' . $data->id . ')" class="btn btn-sm btn-danger" data-id="' . $data->id . '" title="Hapus Data"><i class="bi bi-trash-fill"></i></a>
             ';
             })
+            ->addColumn('aksi1', function ($data) {
+                return '
+                <a href="'.$data->id.'" id="btn-detail" class="btn btn-sm btn-warning" title="Detail Data"><i class="bi bi-eye-fill"></i></a>
+            ';
+            })
             ->editColumn('stok_total',function($data){
                 if($data->stok_total == null){
                     return '0 '.$data->satuan->satuan;
@@ -38,7 +43,7 @@ class BarangController extends Controller
                     return $data->stok_total.' ' . $data->satuan->satuan;
                 }
             })
-            ->rawColumns(['aksi'])
+            ->rawColumns(['aksi','aksi1'])
             ->make(true);
     }
 

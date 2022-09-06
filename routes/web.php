@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\BarangController;
+use App\Http\Controllers\CekStokController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\KategoriController;
 use App\Http\Controllers\ProjectController;
@@ -71,4 +72,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/get-stok-now/{id}', [TransaksiController::class, 'getStok'])->name('get-stok-now');
     Route::post('/post-barang', [TransaksiController::class, 'storeBarang'])->name('post-barang');
     Route::get('/get-form/{status}', [TransaksiController::class, 'getForm'])->name('get-form');
+
+    // cek stok
+    Route::get('/cek-stok', [CekStokController::class, 'index'])->name('cek-stok');
 });

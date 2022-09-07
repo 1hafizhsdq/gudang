@@ -213,8 +213,8 @@
                                 <tr>
                                     <td>`+val.sku.barang.nama_barang+`</td>
                                     <td>`+val.sku.sku+` - `+val.sku.varian+`</td>
-                                    <td>`+val.sku.stok_baru+`</td>
-                                    <td>`+val.sku.stok_bekas+`</td>
+                                    <td>`+val.stok_baru+`</td>
+                                    <td>`+val.stok_bekas+`</td>
                                 </tr>`
                             });
                             $('#tbody').html(tbody)

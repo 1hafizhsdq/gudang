@@ -59,7 +59,7 @@
             </a>
         </li>
         <li class="nav-item">
-            <a class="nav-link {{ ($title == 'Stok Keluar') ? '' : 'collapsed' }}" href="{{ url('cek-stok') }}">
+            <a class="nav-link {{ ($title == 'Stok Keluar') ? '' : 'collapsed' }}" href="{{ url('stok-keluar') }}">
                 <i class="bi bi-arrows-angle-expand"></i>
                 <span>Stok Keluar</span>
             </a>

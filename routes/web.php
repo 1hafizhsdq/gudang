@@ -7,6 +7,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\KategoriController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\SatuanController;
+use App\Http\Controllers\StokKeluarController;
 use App\Http\Controllers\StokMasukController;
 use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\TransaksiController;
@@ -83,4 +84,9 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/stok-masuk', [StokMasukController::class, 'index'])->name('stok-masuk');
     Route::get('/list-stok-masuk', [StokMasukController::class, 'listMasuk'])->name('list-stok-masuk');
     Route::get('/detail-stok-masuk/{id}', [StokMasukController::class, 'detail'])->name('detail-stok-masuk');
+    
+    // stok masuk
+    Route::get('/stok-keluar', [StokKeluarController::class, 'index'])->name('stok-keluar');
+    Route::get('/list-stok-keluar', [StokKeluarController::class, 'listKeluar'])->name('list-stok-keluar');
+    Route::get('/detail-stok-keluar/{id}', [StokKeluarController::class, 'detail'])->name('detail-stok-keluar');
 });

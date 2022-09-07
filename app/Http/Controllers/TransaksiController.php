@@ -85,8 +85,6 @@ class TransaksiController extends Controller
     }
     
     public function storeBarang(Request $request){
-        $stokTotal = Sku::where('barang_id',$request->barang_id)->sum('stok_bekas');
-        dd($stokTotal);
         $validator = Validator::make($request->all(), [
             'barang_id' => 'required',
             'sku_id' => 'required',
@@ -122,6 +120,10 @@ class TransaksiController extends Controller
                 'stok_bekas' => $htgStokBekas,
             ]);
 
+            $stokTotalBekas = Sku::where('barang_id',$request->barang_id)->sum('stok_bekas');
+            $stokTotalBaru = Sku::where('barang_id',$request->barang_id)->sum('stok_baru');
+            $stokTotal = $stokTotalBekas+$stokTotalBaru;
+            Barang::where('id',$request->barang_id)->update(['stok_total' => $stokTotal]);
 
             $tbl = HistoryStokDetail::with('sku.barang')->where('history_id', $request->history_id)->get();
 

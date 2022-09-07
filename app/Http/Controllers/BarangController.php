@@ -33,7 +33,7 @@ class BarangController extends Controller
             })
             ->addColumn('aksi1', function ($data) {
                 return '
-                <a href="'.$data->id.'" id="btn-detail" class="btn btn-sm btn-warning" title="Detail Data"><i class="bi bi-eye-fill"></i></a>
+                <a href="/cek-stok-detail/'.$data->id.'" id="btn-detail" class="btn btn-sm btn-warning" title="Detail Data"><i class="bi bi-eye-fill"></i></a>
             ';
             })
             ->editColumn('stok_total',function($data){

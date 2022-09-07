@@ -57,7 +57,6 @@ Route::middleware(['auth', 'role:1'])->group(function () {
     
     // master barang
     Route::resource('/barang', BarangController::class);
-    Route::get('/list-barang', [BarangController::class, 'listBarang'])->name('list-barang');
     Route::post('/del-foto', [BarangController::class, 'delFoto'])->name('del-foto');
     Route::post('/sku-store', [BarangController::class, 'storeSku'])->name('sku-store');
     Route::get('/del-sku/{id}/{barang}', [BarangController::class, 'delSku'])->name('del-sku');
@@ -65,6 +64,7 @@ Route::middleware(['auth', 'role:1'])->group(function () {
 });
 
 Route::middleware(['auth'])->group(function () {
+    Route::get('/list-barang', [BarangController::class, 'listBarang'])->name('list-barang');
     // master transaksi stok
     Route::get('/tr-stok', [TransaksiController::class, 'index'])->name('tr-stok');
     Route::post('/post-tr-stok', [TransaksiController::class, 'store'])->name('post-tr-stok');
@@ -75,4 +75,6 @@ Route::middleware(['auth'])->group(function () {
 
     // cek stok
     Route::get('/cek-stok', [CekStokController::class, 'index'])->name('cek-stok');
+    Route::get('/cek-stok-detail/{barang_id}', [CekStokController::class, 'detail'])->name('cek-stok-detail');
+    Route::get('/list-sku/{barang_id}', [CekStokController::class, 'listSku'])->name('list-sku');
 });

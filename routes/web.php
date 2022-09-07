@@ -7,6 +7,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\KategoriController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\SatuanController;
+use App\Http\Controllers\StokMasukController;
 use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\TransaksiController;
 use App\Models\Project;
@@ -77,4 +78,9 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/cek-stok', [CekStokController::class, 'index'])->name('cek-stok');
     Route::get('/cek-stok-detail/{barang_id}', [CekStokController::class, 'detail'])->name('cek-stok-detail');
     Route::get('/list-sku/{barang_id}', [CekStokController::class, 'listSku'])->name('list-sku');
+
+    // stok masuk
+    Route::get('/stok-masuk', [StokMasukController::class, 'index'])->name('stok-masuk');
+    Route::get('/list-stok-masuk', [StokMasukController::class, 'listMasuk'])->name('list-stok-masuk');
+    Route::get('/detail-stok-masuk/{id}', [StokMasukController::class, 'detail'])->name('detail-stok-masuk');
 });

@@ -39,6 +39,7 @@
                 </li>
             </ul>
         </li><!-- End Components Nav -->
+        @endif
         <li class="nav-item">
             <a class="nav-link {{ ($title == 'Transaksi Stok') ? '' : 'collapsed' }}" href="{{ url('tr-stok') }}">
                 <i class="bi bi-cart"></i>
@@ -51,6 +52,17 @@
                 <span>Cek Stok</span>
             </a>
         </li>
-        @endif
+        <li class="nav-item">
+            <a class="nav-link {{ ($title == 'Stok Masuk') ? '' : 'collapsed' }}" href="{{ url('stok-masuk') }}">
+                <i class="bi bi-arrows-angle-contract"></i>
+                <span>Stok Masuk</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link {{ ($title == 'Stok Keluar') ? '' : 'collapsed' }}" href="{{ url('cek-stok') }}">
+                <i class="bi bi-arrows-angle-expand"></i>
+                <span>Stok Keluar</span>
+            </a>
+        </li>
     </ul>
 </aside>

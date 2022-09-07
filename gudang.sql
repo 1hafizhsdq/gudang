@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 06, 2022 at 11:11 AM
+-- Generation Time: Sep 07, 2022 at 11:21 AM
 -- Server version: 10.4.22-MariaDB
 -- PHP Version: 8.1.1
 
@@ -46,7 +46,7 @@ CREATE TABLE `barangs` (
 --
 
 INSERT INTO `barangs` (`id`, `kategori_id`, `satuan_id`, `kode_barang`, `nama_barang`, `merk`, `type`, `stok_total`, `foto`, `created_at`, `updated_at`) VALUES
-(13, 2, 2, 'barang edit foto', 'kode edit foto', 'merk edit foto', 'type edit foto', 22, '1662249740_photo6086879660106428755.jpg', '2022-09-03 16:51:56', '2022-09-03 17:02:20'),
+(13, 2, 2, 'barang edit foto', 'kode edit foto', 'merk edit foto', 'type edit foto', 20, '1662515899_photo1656642732.jpeg', '2022-09-03 16:51:56', '2022-09-07 00:41:57'),
 (14, 2, 2, 'dvbkj', 'bkj jfk', 'vhfjb', 'jkfvjfn', NULL, '1662290433_b74b0c8d-9abd-4d35-90ce-3ea8b68c3631.jpg', '2022-09-04 04:20:33', '2022-09-04 04:20:33');
 
 -- --------------------------------------------------------
@@ -92,15 +92,9 @@ CREATE TABLE `history_stoks` (
 --
 
 INSERT INTO `history_stoks` (`id`, `user_id`, `status`, `keterangan`, `created_at`, `updated_at`, `tanggal`, `deskripsi`, `project_id`, `driver`, `nopol`, `penerima`, `no_surat_jalan`) VALUES
-(23, 1, 1, 'wddq', '2022-09-05 19:41:51', '2022-09-05 19:41:51', NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(24, 1, 1, 'fsfaf', '2022-09-05 21:36:33', '2022-09-05 21:36:33', '2022-09-06', 'fsfa', NULL, NULL, NULL, NULL, 'sffafsf'),
-(25, 1, 2, 'fasfa', '2022-09-05 21:36:48', '2022-09-05 21:36:48', '2022-09-06', 'fsfa', 2, 'fsafs', 'fsafa', 'fasfa', '03/SJ/2/IX/2022'),
-(26, 1, 2, 'rwqrq', '2022-09-05 21:37:59', '2022-09-05 21:37:59', '2022-09-07', 'qweqewq', 2, 'weqqqw', 'rwqrwq', 'wqrrq', '02/SJ/2/IX/2022'),
-(27, 1, 1, 'fdsfs', '2022-09-05 23:09:03', '2022-09-05 23:09:03', '2022-09-06', 'dfsdfs', NULL, NULL, NULL, NULL, 'fcsdfvs'),
-(28, 1, 1, 'dsaad', '2022-09-05 23:09:34', '2022-09-05 23:09:34', '2022-09-06', 'dasda', NULL, NULL, NULL, NULL, 'dcscsd'),
-(29, 1, 1, 'fwefw', '2022-09-05 23:11:02', '2022-09-05 23:11:02', '2022-09-06', 'fefw', NULL, NULL, NULL, NULL, 'wefe'),
-(30, 1, 1, 'dsadsa', '2022-09-05 23:49:07', '2022-09-05 23:49:07', '2022-09-06', 'sada', NULL, NULL, NULL, NULL, 'dcsc'),
-(31, 1, 1, 'sdadasd', '2022-09-05 23:51:52', '2022-09-05 23:51:52', '2022-09-06', 'dsada', NULL, NULL, NULL, NULL, 'scad');
+(36, 1, 1, 'fdsfds', '2022-09-06 18:35:00', '2022-09-06 18:35:00', '2022-09-07', 'fdsfs', NULL, NULL, NULL, NULL, 'wdfdsf'),
+(37, 1, 2, 'fsdfs', '2022-09-07 00:38:13', '2022-09-07 00:39:25', '2022-09-07', 'sdss', 2, 'fsfds', 'fdsfs', 'dfsfs', '01/SJ/2/IX/2022'),
+(38, 1, 2, 'ouoiuuo', '2022-09-07 00:41:34', '2022-09-07 00:41:34', '2022-09-07', 'ouiuou', 2, 'oiuouou', 'uoiuou', 'ouiouu', '02/SJ/2/IX/2022');
 
 -- --------------------------------------------------------
 
@@ -126,7 +120,9 @@ CREATE TABLE `history_stok_details` (
 --
 
 INSERT INTO `history_stok_details` (`id`, `history_id`, `barang_id`, `sku_id`, `stok_baru`, `stok_bekas`, `update_stok_baru`, `update_stok_bekas`, `created_at`, `updated_at`) VALUES
-(1, 23, 13, 12, 0, 12, 0, 22, '2022-09-05 19:42:13', '2022-09-05 19:42:13');
+(3, 36, 13, 12, 2, 2, 4, 24, '2022-09-06 18:35:10', '2022-09-06 18:35:10'),
+(4, 37, 13, 12, 1, 4, 3, 20, '2022-09-07 00:38:26', '2022-09-07 00:38:26'),
+(5, 38, 13, 12, 1, 2, 2, 18, '2022-09-07 00:41:56', '2022-09-07 00:41:56');
 
 -- --------------------------------------------------------
 
@@ -278,7 +274,7 @@ CREATE TABLE `skus` (
 --
 
 INSERT INTO `skus` (`id`, `barang_id`, `sku`, `varian`, `stok_baru`, `stok_bekas`, `created_at`, `updated_at`) VALUES
-(12, 13, 'sku 1', 'varian 1', 0, 22, '2022-09-05 06:04:51', '2022-09-05 19:42:13'),
+(12, 13, 'sku 1', 'varian 1', 2, 18, '2022-09-05 06:04:51', '2022-09-07 00:41:57'),
 (13, 13, 'sku 2', 'varian 2', 0, 0, '2022-09-05 06:05:01', '2022-09-05 06:05:01'),
 (14, 14, 'cek 1', 'varian 1', 0, 0, '2022-09-05 06:05:26', '2022-09-05 06:05:26'),
 (15, 14, 'cek 2', 'varian 2', 0, 0, '2022-09-05 06:05:35', '2022-09-05 06:05:35');
@@ -326,7 +322,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `username`, `email`, `email_verified_at`, `password`, `role`, `foto`, `remember_token`, `created_at`, `updated_at`) VALUES
-(1, 'super admin', 'superadmin', 'superadmin@gmail.com', NULL, '$2y$10$ltox1dvwWg.gBW0iGEVFguRDephFzooVPUq7Y7zA1G8gShSzZv9fS', 1, NULL, '3|B9UykBHuyubLiRacAipf8juZrnGL3OkFDUx6oidE', '2022-08-29 05:43:56', '2022-09-05 18:30:18');
+(1, 'super admin', 'superadmin', 'superadmin@gmail.com', NULL, '$2y$10$4RqWQJ20xUk3aO989lGZfuVeKS21pQEf.fNH42N9TTQXClKo37HCq', 1, NULL, '6|FBps95nq8YecZrBTMSENBu4gxTMdMGLG5wQFX8jU', '2022-08-29 05:43:56', '2022-09-06 23:07:20');
 
 --
 -- Indexes for dumped tables
@@ -441,13 +437,13 @@ ALTER TABLE `failed_jobs`
 -- AUTO_INCREMENT for table `history_stoks`
 --
 ALTER TABLE `history_stoks`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
 
 --
 -- AUTO_INCREMENT for table `history_stok_details`
 --
 ALTER TABLE `history_stok_details`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `kategoris`

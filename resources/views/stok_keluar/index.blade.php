@@ -33,6 +33,7 @@
         </div>
     </div>
 </section>
+@includeIf('stok_keluar.modal')
 @endsection
 
 @push('script')
@@ -53,5 +54,9 @@
             { data: 'aksi', class: 'text-center'},
         ]
     });
+
+    function suratJalan(id){
+        alert(id);
+    }
 </script>
 @endpush

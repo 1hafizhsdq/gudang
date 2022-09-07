@@ -40,8 +40,8 @@ class StokKeluarController extends Controller
     }
 
     public function detail($id){
-        $data['title'] = 'Stok Masuk';
-        $data['history'] = HistoryStok::with('user')->find($id);
+        $data['title'] = 'Stok Keluar';
+        $data['history'] = HistoryStok::with('user','project')->find($id);
         $data['historyDetail'] = HistoryStokDetail::with('sku.barang.satuan')->whereHistory_id($id)->get();
 
         return view('stok_keluar.detail',$data);

@@ -15,6 +15,10 @@
                 <div class="card-body">
                     <br>
                     <div class="row mb-3">
+                        <label for="inputText" class="col-sm-2 col-form-label"><b>No Surat Jalan</b></label>
+                        <div class="col-sm-10">{{ $history->no_surat_jalan }}</div>
+                    </div>
+                    <div class="row mb-3">
                         <label for="inputText" class="col-sm-2 col-form-label"><b>Tanggal</b></label>
                         <div class="col-sm-10">{{ $history->tanggal }}</div>
                     </div>

@@ -15,12 +15,32 @@
                 <div class="card-body">
                     <br>
                     <div class="row mb-3">
+                        <label for="inputText" class="col-sm-2 col-form-label"><b>No Surat Jalan</b></label>
+                        <div class="col-sm-10">{{ $history->no_surat_jalan }}</div>
+                    </div>
+                    <div class="row mb-3">
                         <label for="inputText" class="col-sm-2 col-form-label"><b>Tanggal</b></label>
                         <div class="col-sm-10">{{ $history->tanggal }}</div>
                     </div>
                     <div class="row mb-3">
                         <label for="inputText" class="col-sm-2 col-form-label"><b>PIC</b></label>
                         <div class="col-sm-10">{{ $history->user->name }}</div>
+                    </div>
+                    <div class="row mb-3">
+                        <label for="inputText" class="col-sm-2 col-form-label"><b>Project</b></label>
+                        <div class="col-sm-10">{{ $history->project->nama_project }}</div>
+                    </div>
+                    <div class="row mb-3">
+                        <label for="inputText" class="col-sm-2 col-form-label"><b>Driver</b></label>
+                        <div class="col-sm-10">{{ $history->driver }}</div>
+                    </div>
+                    <div class="row mb-3">
+                        <label for="inputText" class="col-sm-2 col-form-label"><b>Nopol</b></label>
+                        <div class="col-sm-10">{{ $history->nopol }}</div>
+                    </div>
+                    <div class="row mb-3">
+                        <label for="inputText" class="col-sm-2 col-form-label"><b>Penerima</b></label>
+                        <div class="col-sm-10">{{ $history->penerima }}</div>
                     </div>
                     <div class="row mb-3">
                         <label for="inputText" class="col-sm-2 col-form-label"><b>Deskripsi</b></label>

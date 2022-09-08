@@ -94,7 +94,6 @@
     }).on('click','#sv',function(){
         var form = $('#form-transaksi'),
             data = form.serializeArray();
-            console.log(data)
 
         $.ajaxSetup({
             headers: {

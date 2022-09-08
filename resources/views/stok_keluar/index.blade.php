@@ -38,6 +38,18 @@
 
 @push('script')
 <script>
+    $(document).ready(function(){
+        $('#kop1').change(function(){
+            $('#kop2').prop('checked',false);
+        })
+        $('#kop2').change(function(){
+            $('#kop1').prop('checked',false);
+        })
+    }).on('click','#sv-kop',function(){
+        var form = $('#form-suratjalan'),
+            data = form.serializeArray();
+            
+    });
     $('#datatable').DataTable({
         responsive: true,
         processing: true,
@@ -56,7 +68,7 @@
     });
 
     function suratJalan(id){
-        alert(id);
+        $('#modal-suratjalan').modal('show');
     }
 </script>
 @endpush

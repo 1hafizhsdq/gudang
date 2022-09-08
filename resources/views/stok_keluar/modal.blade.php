@@ -11,18 +11,22 @@
                     <br>
                     <input type="hidden" name="id" id="id">
                     <fieldset class="row mb-3">
-                        <legend class="col-form-label col-sm-2 pt-0">Radios</legend>
-                        <div class="col-sm-10">
+                        <legend class="col-form-label col-sm-3 pt-0">Kop Surat Jalan</legend>
+                        <div class="col-sm-9">
                             <div class="form-check">
-                                <input class="form-check-input" type="radio" name="kop1" id="kop1" value="1" checked="">
+                                <input class="form-check-input" type="radio" name="kop" id="kop1" value="1">
                                 <label class="form-check-label" for="kop1">
-                                    First radio
+                                    <div class="kop">
+                                        <h3>MIA TEKNIK</h3>
                                 </label>
                             </div>
+                        </div>
+                        <div class="col-sm-9">
                             <div class="form-check">
-                                <input class="form-check-input" type="radio" name="kop2" id="kop2" value="2">
+                                <input class="form-check-input" type="radio" name="kop" id="kop2" value="2">
                                 <label class="form-check-label" for="kop2">
-                                    Second radio
+                                    <div class="kop">
+                                        <h3>Haisa Tata Karya</h3>
                                 </label>
                             </div>
                         </div>
@@ -30,7 +34,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
-                <button type="button" id="sv-barang" class="btn btn-primary">Simpan</button>
+                <button type="button" id="sv-kop" class="btn btn-primary">Simpan</button>
             </div>
             </form>
         </div>

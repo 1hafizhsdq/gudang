@@ -47,4 +47,8 @@ class StokKeluarController extends Controller
 
         return view('stok_keluar.detail',$data);
     }
+
+    public function suratJalan(){
+        return view('stok_keluar.suratjalan');
+    }
 }

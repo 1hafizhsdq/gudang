@@ -72,13 +72,5 @@
             { data: 'aksi', class: 'text-center'},
         ]
     });
-
-    function suratJalan(id){
-        // var href = $(this).attr('href');
-        // console.log(href)
-        // if(href == "#"){
-        //     $('#modal-suratjalan').modal('show');
-        // }
-    }
 </script>
 @endpush

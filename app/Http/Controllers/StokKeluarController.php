@@ -8,6 +8,8 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\Facades\DataTables;
+// use Barryvdh\DomPDF\PDF as PDF;
+use \PDF;
 
 class StokKeluarController extends Controller
 {
@@ -51,7 +53,9 @@ class StokKeluarController extends Controller
     public function suratJalan(Request $request){
         $data['data'] = HistoryStok::with('historyStokDetail.sku.barang.satuan','project','user')->find($request->id);
         $data['kop'] = $request->kop;
-        
-        return view('stok_keluar.suratjalan',$data);
+
+        // return view('stok_keluar.suratjalan',$data);
+        $pdf = \PDF::loadview('stok_keluar.suratjalan', $data);
+        return $pdf->download('suratjalan.pdf');
     }
 }

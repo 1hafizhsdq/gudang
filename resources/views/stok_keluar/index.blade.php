@@ -52,16 +52,10 @@
             $('#id').val($(this).data('id'));
             $('#modal-suratjalan').modal('show');
         }
+    }).on('click','#sv-kop',function(){
+        $('#modal-suratjalan').modal('hide');
     });
-    // .on('click','#sv-kop',function(){
-    // var form = $('#form-suratjalan'),
-    // data = form.serializeArray();
     
-    // var id = data[1],
-    // kop = data[2];
-    // var href = "/cetak-suratjalan/"+id+"/"+kop;
-    
-    // })
     $('#datatable').DataTable({
         responsive: true,
         processing: true,

@@ -23,7 +23,7 @@
       
       body {
       position: relative;
-      width: 21cm;
+      width: 19cm;
       height: 29.7cm;
       margin: 0 auto;
       color: #555555;
@@ -55,7 +55,7 @@
       
       
       #details {
-      margin-bottom: 50px;
+      margin-bottom: 10px;
       }
       
       #client {
@@ -101,7 +101,7 @@
       
       table th,
       table td {
-      padding: 20px;
+      padding: 10px;
       text-align: center;
       border: '1px solid black'
       }
@@ -230,27 +230,27 @@
           <div class="to"><b>SURAT JALAN NO. </b>{{ $data->no_surat_jalan }}</div>
           <div class="address">Kami kirimkan barang-barang tersebut dibawah ini dengan Nopol {{ $data->nopol }}</div>
         </div>
-        <div id="invoice">
-        </div>
+        {{-- <div id="invoice">
+        </div> --}}
       </div>
-      <table border="1px solid black" cellspacing="0" cellpadding="0">
+      <table cellspacing="0" cellpadding="0">
         <thead>
           <tr>
-            <th width="1%">No</th>
-            <th>Barang</th>
-            <th width="5%">Jumlah</th>
-            <th width="7%">Satuan</th>
-            <th>Keterangan</th>
+            <th width="1%" style="border: 1px solid;">No</th>
+            <th style="border: 1px solid;">Barang</th>
+            <th width="7%" style="border: 1px solid;">Jumlah</th>
+            <th width="7%" style="border: 1px solid;">Satuan</th>
+            <th width="28%" style="border: 1px solid;">Keterangan</th>
           </tr>
         </thead>
         <tbody>
           @foreach ($data->historyStokDetail as $hd)
             <tr>
-              <td>{{ $loop->iteration }}</td>
-              <td>{{ $hd->sku->barang->nama_barang }}, {{ $hd->sku->varian }}</td>
-              <td>{{ $hd->stok_baru + $hd->stok_bekas }}</td>
-              <td>{{ $hd->sku->barang->satuan->satuan }}</td>
-              <td>{{ $hd->keterangan }}</td>
+              <td style="border: 1px solid;">{{ $loop->iteration }}</td>
+              <td style="border: 1px solid;">{{ $hd->sku->barang->nama_barang }}, {{ $hd->sku->varian }}</td>
+              <td style="border: 1px solid;">{{ $hd->stok_baru + $hd->stok_bekas }}</td>
+              <td style="border: 1px solid;">{{ $hd->sku->barang->satuan->satuan }}</td>
+              <td style="border: 1px solid;">{{ $hd->keterangan }}</td>
             </tr>
           @endforeach
         </tbody>
@@ -263,9 +263,9 @@
           <td style="text-align: center">Hormat Kami,</td>
         </tr>
         <tr>
-          <td style="text-align: center;padding-top: 100px;text-decoration:underline">{{ $data->driver }}</td>
-          <td style="text-align: center;padding-top: 100px;text-decoration:underline">{{ $data->penerima }}</td>
-          <td style="text-align: center;padding-top: 100px;text-decoration:underline">{{ $data->user->name }}</td>
+          <td style="text-align: center;padding-top: 70px;text-decoration:underline">{{ $data->driver }}</td>
+          <td style="text-align: center;padding-top: 70px;text-decoration:underline">{{ $data->penerima }}</td>
+          <td style="text-align: center;padding-top: 70px;text-decoration:underline">{{ $data->user->name }}</td>
         </tr>
       </table>
 

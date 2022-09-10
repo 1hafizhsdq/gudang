@@ -19,4 +19,9 @@ class HistoryStok extends Model
     {
         return $this->belongsTo(Project::class, 'project_id');
     }
+    
+    public function historyStokDetail()
+    {
+        return $this->hasMany(HistoryStokDetail::class,'history_id');
+    }
 }

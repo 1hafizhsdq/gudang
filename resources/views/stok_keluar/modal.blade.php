@@ -6,7 +6,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form class="row g-3 mt-2" id="form-suratjalan">
+                <form class="row g-3 mt-2" id="form-suratjalan" action="/suratjalan" method="POST">
                     @csrf
                     <br>
                     <input type="hidden" name="id" id="id">
@@ -34,7 +34,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
-                <button type="button" id="sv-kop" class="btn btn-primary">Simpan</button>
+                <button type="submit" id="sv-kop" class="btn btn-primary">Simpan</button>
             </div>
             </form>
         </div>

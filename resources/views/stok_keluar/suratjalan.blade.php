@@ -206,25 +206,29 @@
   <body>
     <header class="clearfix">
       <div id="logo">
-        <img src="{{public_path('niceadmin')}}/assets/img/logo.png">
-        <h2 class="name">MIA CORP.</h2>
+        {{-- <img src="{{public_path('niceadmin')}}/assets/img/logo.png"> --}}
+        @if ($kop == 1)
+          <h2 class="name">MIA TEKNIK</h2>
+        @else
+          <h2 class="name">PT. Haisa Tata Karya</h2>
+        @endif
         <div>Jl. Desa Balong Pandan RT/RW 007/002 Jogosatru<br>Sukodono Sidoarjo - 61258</div>
         <div>(031) 99893526</div>
         <div><a href="mailto:miateknikindonesia@gmail.com">miateknikindonesia@gmail.com</a></div>
         <div><a href="mailto:haisatatakarya@gmail.com">haisatatakarya@gmail.com</a></div>
       </div>
       <div id="company" style="margin-top: 10%">
-        <div>Nanti diisi tanggal 08/09/2022</div>
-        <div>Kepada Yth. Nanti nama perusahaannya</div>
-        <div>Nama Project</div>
+        <div>{{ date('d/m/Y',strtotime($data->tanggal)) }}</div>
+        <div>Kepada Yth. {{ $data->project->nama_perusahaan }}</div>
+        <div>{{ $data->project->nama_project }}</div>
       </div>
       </div>
     </header>
     <main>
       <div id="details" class="clearfix">
         <div id="client">
-          <div class="to"><b>SURAT JALAN NO</b></div>
-          <div class="address">Kami kirimkan barang-barang tersebut dibawah ini dengan Nopol {nanti nopol nya}</div>
+          <div class="to"><b>SURAT JALAN NO. </b>{{ $data->no_surat_jalan }}</div>
+          <div class="address">Kami kirimkan barang-barang tersebut dibawah ini dengan Nopol {{ $data->nopol }}</div>
         </div>
         <div id="invoice">
         </div>
@@ -240,21 +244,28 @@
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>1</td>
-            <td>barang</td>
-            <td>10</td>
-            <td>pcs</td>
-            <td>keterangan</td>
-          </tr>
+          @foreach ($data->historyStokDetail as $hd)
+            <tr>
+              <td>{{ $loop->iteration }}</td>
+              <td>{{ $hd->sku->barang->nama_barang }}, {{ $hd->sku->varian }}</td>
+              <td>{{ $hd->stok_baru + $hd->stok_bekas }}</td>
+              <td>{{ $hd->sku->barang->satuan->satuan }}</td>
+              <td>{{ $hd->keterangan }}</td>
+            </tr>
+          @endforeach
         </tbody>
       </table>
 
-      <table style="text-align: center;border:">
+      <table>
         <tr>
-          <td>Pengirim,</td>
-          <td>Penerima,</td>
-          <td>Hormat Kami,</td>
+          <td style="text-align: center">Pengirim,</td>
+          <td style="text-align: center">Penerima,</td>
+          <td style="text-align: center">Hormat Kami,</td>
+        </tr>
+        <tr>
+          <td style="text-align: center;padding-top: 100px;text-decoration:underline">{{ $data->driver }}</td>
+          <td style="text-align: center;padding-top: 100px;text-decoration:underline">{{ $data->penerima }}</td>
+          <td style="text-align: center;padding-top: 100px;text-decoration:underline">{{ $data->user->name }}</td>
         </tr>
       </table>
 

@@ -45,11 +45,23 @@
         $('#kop2').change(function(){
             $('#kop1').prop('checked',false);
         })
-    }).on('click','#sv-kop',function(){
-        var form = $('#form-suratjalan'),
-            data = form.serializeArray();
-            
+    }).on('click','.surat-jalan',function(){
+        var href = $(this).attr('href');
+        
+        if(href == "#"){
+            $('#id').val($(this).data('id'));
+            $('#modal-suratjalan').modal('show');
+        }
     });
+    // .on('click','#sv-kop',function(){
+    // var form = $('#form-suratjalan'),
+    // data = form.serializeArray();
+    
+    // var id = data[1],
+    // kop = data[2];
+    // var href = "/cetak-suratjalan/"+id+"/"+kop;
+    
+    // })
     $('#datatable').DataTable({
         responsive: true,
         processing: true,
@@ -68,7 +80,11 @@
     });
 
     function suratJalan(id){
-        $('#modal-suratjalan').modal('show');
+        // var href = $(this).attr('href');
+        // console.log(href)
+        // if(href == "#"){
+        //     $('#modal-suratjalan').modal('show');
+        // }
     }
 </script>
 @endpush

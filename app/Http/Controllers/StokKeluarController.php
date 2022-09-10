@@ -33,7 +33,7 @@ class StokKeluarController extends Controller
             ->addColumn('aksi', function ($data) {
                 return '
                     <a href="/detail-stok-keluar/'.$data->id.'" id="btn-detail" class="btn btn-sm btn-warning" title="Detail Data"><i class="bi bi-eye-fill"></i></a>
-                    <a id="surat-jalan" class="btn btn-sm btn-primary surat-jalan" data-id="'.$data->id.'" onclick="suratJalan(' . $data->id . ')" title="surat Jalan"><i class="bi bi-card-text"></i></a>
+                    <a href="#" id="surat-jalan" class="btn btn-sm btn-primary surat-jalan" data-id="'.$data->id.'" onclick="suratJalan(' . $data->id . ')" title="surat Jalan"><i class="bi bi-card-text"></i></a>
                 ';
             })
             ->rawColumns(['aksi'])
@@ -48,7 +48,10 @@ class StokKeluarController extends Controller
         return view('stok_keluar.detail',$data);
     }
 
-    public function suratJalan(){
-        return view('stok_keluar.suratjalan');
+    public function suratJalan(Request $request){
+        $data['data'] = HistoryStok::with('historyStokDetail.sku.barang.satuan','project','user')->find($request->id);
+        $data['kop'] = $request->kop;
+        
+        return view('stok_keluar.suratjalan',$data);
     }
 }

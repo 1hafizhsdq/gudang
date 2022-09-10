@@ -90,4 +90,5 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/list-stok-keluar', [StokKeluarController::class, 'listKeluar'])->name('list-stok-keluar');
     Route::get('/detail-stok-keluar/{id}', [StokKeluarController::class, 'detail'])->name('detail-stok-keluar');
     Route::post('/suratjalan', [StokKeluarController::class, 'suratjalan'])->name('suratjalan');
+    Route::get('/list-stok-keluar-filter', [StokKeluarController::class, 'listKeluarFilter'])->name('list-stok-keluar-filter');
 });

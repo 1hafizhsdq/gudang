@@ -86,17 +86,10 @@
     }).on('click','#btn-filter',function(){
         var bulan = $('#bulan').val(),
             tahun = $('#tahun').val();
-        
-        // var form = $('#form-filter'),
-        // data = form.serializeArray();
 
         if((bulan == '')){
             errorMsg('Bulan dan tahun tidak boleh kosong!');
         }else{
-            var data = {
-                bulan:bulan,
-                tahun:tahun,
-            }
             filter(bulan,tahun);
         }
     });

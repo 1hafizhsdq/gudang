@@ -55,9 +55,6 @@ class StokKeluarController extends Controller
         $tahun = join(",",$request->tahun);
         $data = $data->whereRaw('EXTRACT(MONTH FROM tanggal) in ('.$bulan.')');
         $data = $data->whereRaw('EXTRACT(YEAR FROM tanggal) in ('.$tahun.')');
-        // foreach($request->tahun as $th){
-        //     $data = $data->whereYear('tanggal',$th);
-        // }
 
         $data = $data->get();
         

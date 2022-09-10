@@ -84,6 +84,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/stok-masuk', [StokMasukController::class, 'index'])->name('stok-masuk');
     Route::get('/list-stok-masuk', [StokMasukController::class, 'listMasuk'])->name('list-stok-masuk');
     Route::get('/detail-stok-masuk/{id}', [StokMasukController::class, 'detail'])->name('detail-stok-masuk');
+    Route::get('/list-stok-masuk-filter', [StokMasukController::class, 'listMasukFilter'])->name('list-stok-masuk-filter');
     
     // stok keluar
     Route::get('/stok-keluar', [StokKeluarController::class, 'index'])->name('stok-keluar');

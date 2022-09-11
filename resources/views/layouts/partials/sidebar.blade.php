@@ -64,5 +64,24 @@
                 <span>Stok Keluar</span>
             </a>
         </li>
+        {{-- <li class="nav-item">
+            <a class="nav-link collapsed" data-bs-target="#laporan-nav" data-bs-toggle="collapse" href="#">
+                <i class="bi bi-clipboard-data"></i><span>Laporan</span><i class="bi bi-chevron-down ms-auto"></i>
+            </a>
+            <ul id="laporan-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+                <li>
+                    <a class="nav-link {{ ($title == 'Laporan Transaksi Project') ? '' : 'collapsed' }}"
+                        href="{{ url('report-stokmasuk') }}">
+                        <i class="bi bi-circle"></i><span>Stok Masuk</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="nav-link {{ ($title == 'Laporan Saldo Pegawai') ? '' : 'collapsed' }}"
+                        href="{{ (Auth::user()->role == 1 || Auth::user()->role == 2) ? url('saldo-pegawai') : url('/detail-saldo-pegawai').'/'.Auth::user()->id}}">
+                        <i class="bi bi-circle"></i><span>Stok Keluar</span>
+                    </a>
+                </li>
+            </ul>
+        </li> --}}
     </ul>
 </aside>

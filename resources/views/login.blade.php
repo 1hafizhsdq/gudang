@@ -29,7 +29,7 @@
     <link href="{{asset('niceadmin')}}/assets/vendor/simple-datatables/style.css" rel="stylesheet">
 
     <!-- Template Main CSS File -->
-    <link href="{{asset('niceadmin')}}/assets/css/style.css" rel="stylesheet">
+    <link href="{{asset('niceadmin')}}/assets/css/style_oren.css" rel="stylesheet">
 </head>
 
 <body>

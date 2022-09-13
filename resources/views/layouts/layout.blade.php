@@ -37,7 +37,7 @@
     <link rel="stylesheet" href="{{asset('js/')}}/datatables/datatables-buttons/css/buttons.bootstrap4.min.css">
 
     <!-- Template Main CSS File -->
-    <link href="{{asset('niceadmin')}}/assets/css/style.css" rel="stylesheet">
+    <link href="{{asset('niceadmin')}}/assets/css/style_oren.css" rel="stylesheet">
 
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     @stack('css')

@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::table('history_stoks', function (Blueprint $table) {
-            $table->string('no_surat_jalan')->nullable();
+            $table->string('no_surat_jalan')->nullable()->change();
         });
     }
 

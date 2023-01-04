@@ -12,6 +12,7 @@ use App\Http\Controllers\StokKeluarController;
 use App\Http\Controllers\StokMasukController;
 use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\TransaksiController;
+use App\Http\Controllers\TypeController;
 use App\Models\Project;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -49,6 +50,10 @@ Route::middleware(['auth', 'role:1'])->group(function () {
     // master merk
     Route::resource('/merk', MerkController::class);
     Route::get('/list-merk', [MerkController::class, 'listMerk'])->name('list-merk');
+    
+    // master type
+    Route::resource('/type', TypeController::class);
+    Route::get('/list-type', [TypeController::class, 'listType'])->name('list-type');
     
     // master satuan
     Route::resource('/satuan', SatuanController::class);

@@ -5,6 +5,7 @@ use App\Http\Controllers\BarangController;
 use App\Http\Controllers\CekStokController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\KategoriController;
+use App\Http\Controllers\MerkController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\SatuanController;
 use App\Http\Controllers\StokKeluarController;
@@ -44,6 +45,10 @@ Route::middleware(['auth', 'role:1'])->group(function () {
     // master kategori
     Route::resource('/kategori', KategoriController::class);
     Route::get('/list-kategori', [KategoriController::class, 'listKategori'])->name('list-kategori');
+    
+    // master merk
+    Route::resource('/merk', MerkController::class);
+    Route::get('/list-merk', [MerkController::class, 'listMerk'])->name('list-merk');
     
     // master satuan
     Route::resource('/satuan', SatuanController::class);

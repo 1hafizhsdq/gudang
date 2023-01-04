@@ -56,7 +56,7 @@ class LoginController extends Controller
     }
 
     public function loginApi(Request $request){
-        $res = Http::post('http://127.0.0.1:8081/api/login',[
+        $res = Http::post('htk.test/api/login',[
             'headers' => [
                 'Authorization' => 'Bearer ',
                 'Accept' => 'application/json',
@@ -101,6 +101,7 @@ class LoginController extends Controller
                 'role' => $body->role,
                 'foto' => $body->foto,
                 'remember_token' => $token,
+                'kategori_admin' => $body->kategori_admin
             ]);
         }else{
             User::where('id',$user->id)->update([
@@ -111,6 +112,7 @@ class LoginController extends Controller
                 'role' => $user->role,
                 'foto' => $user->foto,
                 'remember_token' => $token,
+                'kategori_admin' => $body->kategori_admin
             ]);
         }
 

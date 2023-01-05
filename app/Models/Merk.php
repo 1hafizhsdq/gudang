@@ -9,4 +9,8 @@ class Merk extends Model
 {
     use HasFactory;
     protected $guarded = [];
+
+    public function type(){
+        return $this->hasMany(Type::class);
+    }
 }

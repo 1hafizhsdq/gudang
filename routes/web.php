@@ -73,6 +73,7 @@ Route::middleware(['auth', 'role:1'])->group(function () {
     Route::post('/sku-store', [BarangController::class, 'storeSku'])->name('sku-store');
     Route::get('/del-sku/{id}/{barang}', [BarangController::class, 'delSku'])->name('del-sku');
     Route::get('/edit-sku/{id}', [BarangController::class, 'editSku'])->name('edit-sku');
+    Route::get('/find-merk', [BarangController::class, 'findMerk'])->name('find-merk');
 });
 
 Route::middleware(['auth'])->group(function () {

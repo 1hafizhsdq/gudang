@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Barang;
 use App\Models\Kategori;
+use App\Models\Merk;
 use App\Models\Satuan;
 use App\Models\Sku;
 use Illuminate\Http\Request;
@@ -59,19 +60,17 @@ class BarangController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'kode_barang' => 'required',
             'nama_barang' => 'required',
             'kategori_id' => 'required',
-            'merk' => 'required',
-            'type' => 'required',
+            'merk_id' => 'required',
+            'type_id' => 'required',
             'satuan_id' => 'required',
             // 'foto' => 'required|max:2048|mimes:jpeg,jpg,png',
         ], [
-            'kode_barang.required' => 'Kode Barang tidak boleh kosong!',
             'nama_barang.required' => 'Nama Barang tidak boleh kosong!',
             'kategori_id.required' => 'Kategori tidak boleh kosong!',
-            'merk.required' => 'Merk tidak boleh kosong!',
-            'type.required' => 'Type tidak boleh kosong!',
+            'merk_id.required' => 'Merk tidak boleh kosong!',
+            'type_id.required' => 'Type tidak boleh kosong!',
             'satuan_id.required' => 'Satuan tidak boleh kosong!',
             // 'foto.required' => 'Foto tidak boleh kosong!',
             // 'foto.max' => 'Ukuran maksimal foto 2MB!',
@@ -91,8 +90,8 @@ class BarangController extends Controller
                     'kode_barang' => $request->kode_barang,
                     'nama_barang' => $request->nama_barang,
                     'kategori_id' => $request->kategori_id,
-                    'merk' => $request->merk,
-                    'type' => $request->type,
+                    'merk_id' => $request->merk_id,
+                    'type_id' => $request->type_id,
                     'satuan_id' => $request->satuan_id,
                     'foto' => $filename,
                 ]);
@@ -107,8 +106,8 @@ class BarangController extends Controller
                     'kode_barang' => $request->kode_barang,
                     'nama_barang' => $request->nama_barang,
                     'kategori_id' => $request->kategori_id,
-                    'merk' => $request->merk,
-                    'type' => $request->type,
+                    'merk_id' => $request->merk_id,
+                    'type_id' => $request->type_id,
                     'satuan_id' => $request->satuan_id,
                 ];
                 if($request->file('foto')){
@@ -154,15 +153,15 @@ class BarangController extends Controller
             'kode_barang' => 'required',
             'nama_barang' => 'required',
             'kategori_id' => 'required',
-            'merk' => 'required',
-            'type' => 'required',
+            'merk_id' => 'required',
+            'type_id' => 'required',
             'satuan_id' => 'required',
         ], [
             'kode_barang.required' => 'Kode Barang tidak boleh kosong!',
             'nama_barang.required' => 'Nama Barang tidak boleh kosong!',
             'kategori_id.required' => 'Kategori tidak boleh kosong!',
-            'merk.required' => 'Merk tidak boleh kosong!',
-            'type.required' => 'Type tidak boleh kosong!',
+            'merk_id.required' => 'Merk tidak boleh kosong!',
+            'type_id.required' => 'Type tidak boleh kosong!',
             'satuan_id.required' => 'Satuan tidak boleh kosong!',
         ]);
 
@@ -173,8 +172,8 @@ class BarangController extends Controller
                 'kode_barang' => $request->kode_barang,
                 'nama_barang' => $request->nama_barang,
                 'kategori_id' => $request->kategori_id,
-                'merk' => $request->merk,
-                'type' => $request->type,
+                'merk_id' => $request->merk_id,
+                'type_id' => $request->type_id,
                 'satuan_id' => $request->satuan_id,
             ];
 
@@ -240,4 +239,10 @@ class BarangController extends Controller
         $sku = Sku::where('barang_id',$barang)->get();
         return response()->json(['success' => 'Berhasil menghapus SKU','sku' => $sku]);
     }
+
+    public function findMerk(Request $request){
+        $data = Merk::with('type')->where('merk', 'LIKE', '%' . $request->term . '%')->get();
+        return response()->json($data);
+    }
+
 }

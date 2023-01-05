@@ -6,7 +6,7 @@
                 <span>Dashboard</span>
             </a>
         </li>
-        @if (Auth::user()->role == 1 || Auth::user()->role == 2)
+        @if (Auth::user()->kategori_admin == 1)
         <li class="nav-item">
             <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
                 <i class="bi bi-menu-button-wide"></i><span>Data Master</span><i class="bi bi-chevron-down ms-auto"></i>

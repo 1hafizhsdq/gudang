@@ -51,8 +51,8 @@
             { data: 'kode_barang'},
             { data: 'kategori.kategori'},
             { data: 'nama_barang'},
-            { data: 'merk'},
-            { data: 'type'},
+            { data: 'merk.merk'},
+            { data: 'type.type'},
             { data: 'stok_total'},
             { data: 'aksi', class: 'text-center'}
         ]

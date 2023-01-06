@@ -10,6 +10,7 @@ use App\Models\Sku;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 use Yajra\DataTables\Facades\DataTables;
 
 class BarangController extends Controller
@@ -23,7 +24,7 @@ class BarangController extends Controller
 
     public function listBarang()
     {
-        $data = Barang::with('kategori','satuan')->get();
+        $data = Barang::with('kategori','satuan','merk','type')->get();
         return DataTables::of($data)
             ->addIndexColumn()
             ->addColumn('aksi', function ($data) {
@@ -62,7 +63,12 @@ class BarangController extends Controller
         $validator = Validator::make($request->all(), [
             'nama_barang' => 'required',
             'kategori_id' => 'required',
-            'merk_id' => 'required',
+            'merk_id' => [
+                'required',
+                Rule::unique('barangs')->where(function ($q) use ($request){
+                    return $q->where('type_id',$request->type_id);
+                })
+            ],
             'type_id' => 'required',
             'satuan_id' => 'required',
             // 'foto' => 'required|max:2048|mimes:jpeg,jpg,png',
@@ -70,6 +76,7 @@ class BarangController extends Controller
             'nama_barang.required' => 'Nama Barang tidak boleh kosong!',
             'kategori_id.required' => 'Kategori tidak boleh kosong!',
             'merk_id.required' => 'Merk tidak boleh kosong!',
+            'merk_id.unique' => 'Merk dan Type ini sudah pernah di input',
             'type_id.required' => 'Type tidak boleh kosong!',
             'satuan_id.required' => 'Satuan tidak boleh kosong!',
             // 'foto.required' => 'Foto tidak boleh kosong!',

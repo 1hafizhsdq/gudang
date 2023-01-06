@@ -16,7 +16,7 @@ class Role
      */
     public function handle(Request $request, Closure $next, ...$role)
     {
-        if (auth()->user() && in_array(auth()->user()->role, $role)) {
+        if (auth()->user() && in_array(auth()->user()->kategori_admin, $role)) {
             return $next($request);
         }
 

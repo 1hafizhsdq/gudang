@@ -5,6 +5,7 @@ use App\Http\Controllers\BarangController;
 use App\Http\Controllers\CekStokController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\KategoriController;
+use App\Http\Controllers\LokasiController;
 use App\Http\Controllers\MerkController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\SatuanController;
@@ -46,6 +47,10 @@ Route::middleware(['auth', 'role:1'])->group(function () {
     // master kategori
     Route::resource('/kategori', KategoriController::class);
     Route::get('/list-kategori', [KategoriController::class, 'listKategori'])->name('list-kategori');
+    
+    // master lokasi
+    Route::resource('/lokasi', LokasiController::class);
+    Route::get('/list-lokasi', [LokasiController::class, 'listLokasi'])->name('list-lokasi');
     
     // master merk
     Route::resource('/merk', MerkController::class);

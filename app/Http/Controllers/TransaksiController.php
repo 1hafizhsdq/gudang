@@ -20,6 +20,15 @@ class TransaksiController extends Controller
         return view('transaksi.index',$data);
     }
 
+    public function indexMasuk(){
+        $data['title'] = "Stok Masuk";
+        $data['barang'] = Barang::get();
+        $data['pic'] = User::get();
+        $data['project'] = Project::orderBy('id','desc')->get();
+
+        return view('transaksi.index-masuk',$data);
+    }
+
     public function store(Request $request){
         $validator = Validator::make($request->all(), [
             'status' => 'required',

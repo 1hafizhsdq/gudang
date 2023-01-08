@@ -62,6 +62,23 @@
             </a>
         </li>
         <li class="nav-item">
+            <a class="nav-link collapsed" data-bs-target="#transaksi-nav" data-bs-toggle="collapse" href="#">
+                <i class="bi bi-cart"></i><span>Transaksi Stok</span><i class="bi bi-chevron-down ms-auto"></i>
+            </a>
+            <ul id="transaksi-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+                <li>
+                    <a class="nav-link {{ ($title == 'Stok Masuk') ? '' : 'collapsed' }}" href="{{ url('tr-stok-masuk') }}">
+                        <i class="bi bi-circle"></i><span>Stok Masuk</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="nav-link {{ ($title == 'Satuan') ? '' : 'collapsed' }}" href="{{ url('satuan') }}">
+                        <i class="bi bi-circle"></i><span>Stok Keluar</span>
+                    </a>
+                </li>
+            </ul>
+        </li>
+        <li class="nav-item">
             <a class="nav-link {{ ($title == 'Cek Stok') ? '' : 'collapsed' }}" href="{{ url('cek-stok') }}">
                 <i class="bi bi-search"></i>
                 <span>Cek Stok</span>

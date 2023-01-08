@@ -38,10 +38,10 @@ Auth::routes();
 // Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::post('/auth-login', [LoginController::class, 'loginApi'])->name('auth-login');
 
-Route::middleware(['auth', 'role:1,2,8'])->group(function () {
-    // dashboard
-    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
-});
+// Route::middleware(['auth', 'role:1,2,8'])->group(function () {
+//     // dashboard
+//     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+// });
 
 Route::middleware(['auth', 'role:1'])->group(function () {
     // master kategori
@@ -82,9 +82,13 @@ Route::middleware(['auth', 'role:1'])->group(function () {
 });
 
 Route::middleware(['auth'])->group(function () {
+    // dashboard
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('/list-barang', [BarangController::class, 'listBarang'])->name('list-barang');
+    
     // master transaksi stok
     Route::get('/tr-stok', [TransaksiController::class, 'index'])->name('tr-stok');
+    Route::get('/tr-stok-masuk', [TransaksiController::class, 'indexMasuk'])->name('tr-stok-masuk');
     Route::post('/post-tr-stok', [TransaksiController::class, 'store'])->name('post-tr-stok');
     Route::get('/get-sku/{id}', [TransaksiController::class, 'getSku'])->name('get-sku');
     Route::get('/get-stok-now/{id}', [TransaksiController::class, 'getStok'])->name('get-stok-now');

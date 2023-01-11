@@ -7,8 +7,11 @@ use App\Models\HistoryStok;
 use App\Models\HistoryStokDetail;
 use App\Models\Project;
 use App\Models\Sku;
+use App\Models\Supplier;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Validator;
 
 class TransaksiController extends Controller
@@ -25,6 +28,7 @@ class TransaksiController extends Controller
         $data['barang'] = Barang::get();
         $data['pic'] = User::get();
         $data['project'] = Project::orderBy('id','desc')->get();
+        $data['supplier'] = Supplier::get();
 
         return view('transaksi.index-masuk',$data);
     }
@@ -146,6 +150,20 @@ class TransaksiController extends Controller
 
         $contents = view(($id == 1) ? 'transaksi.masuk' :'transaksi.keluar', $data)->render();
         return response()->json(['content' => $contents]);
+    }
+
+    public function getProject(){
+        try {
+            $res = Http::withHeaders([
+                'Authorization' =>  'Bearer ' . Auth::user()->remember_token,
+                'Content-Type' => 'application/json' 
+            ])->get('htk.test/api/project-list');
+        } catch (\Throwable $th) {
+            return 'Terjadi Kesalahan';
+        }
+        $data = json_decode($res->body(),true);
+
+        return response()->json($data['data']);
     }
 
     public function getRomawi($bln){

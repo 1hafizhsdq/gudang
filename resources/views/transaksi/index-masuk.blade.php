@@ -41,6 +41,34 @@
                                     </div>
                                 </div>
                                 <div class="row mb-3">
+                                    <label for="asal" class="col-sm-3 col-form-label">Asal Kirim</label>
+                                    <div class="col-sm-9">
+                                        <select class="form-select select2" aria-label="Default select example" name="asal" id="asal">
+                                            <option selected>-- Pilih Asal Kirim --</option>
+                                            <option value="1">Project / Gudang Cabang</option>
+                                            <option value="2">Supplier</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="row mb-3" id="div-supplier">
+                                    <label for="supplier" class="col-sm-3 col-form-label">Supplier</label>
+                                    <div class="col-sm-9">
+                                        <select class="form-select select2" aria-label="Default select example" name="supplier" id="supplier" disabled>
+                                            <option selected>-- Pilih Supplier --</option>
+                                            @foreach ($supplier as $sup)
+                                                <option value="{{ $sup->id }}">{{ $sup->nama }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="row mb-3" id="div-project">
+                                    <label for="project" class="col-sm-3 col-form-label">Project / Gudang Cabang</label>
+                                    <div class="col-sm-9">
+                                        <select class="form-select select2" aria-label="Default select example" name="project" id="project" disabled>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="row mb-3">
                                     <label for="deskripsi" class="col-sm-3 col-form-label">Deskripsi</label>
                                     <div class="col-sm-9">
                                         <textarea class="form-control" style="height: 100px" name="deskripsi" id="deskripsi" placeholder="Deskripsi"></textarea>
@@ -258,6 +286,28 @@
                 });
             }
         });
+    }).on('change','#asal',function(){
+        var asal = $(this).val();
+
+        if(asal == 1){
+            $('#project').removeAttr('disabled');
+            $('#supplier').attr('disabled','disabled');
+            
+            $.ajax({
+                url: '/get-project/',
+                method: 'GET',
+                success: function(result) {
+                    var option = '<option>-- Pilih Project --</option>'
+                    $.each(result, function(key, val) {
+                        option += '<option value="'+val.id+'">'+val.project+'</option>'
+                    });
+                    $('#project').html(option);
+                },
+            });
+        }else{
+            $('#project').attr('disabled','disabled');
+            $('#supplier').removeAttr('disabled');
+        }
         
     });
 </script>

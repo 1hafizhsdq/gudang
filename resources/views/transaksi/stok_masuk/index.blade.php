@@ -23,9 +23,9 @@
                         <div class="row">
                             <div class="col">
                                 <div class="row mb-3" style="display: none;">
-                                    <label class="col-sm-3 col-form-label">Tipe</label>
+                                    <label class="col-sm-3 col-form-label">Status</label>
                                     <div class="col-sm-9">
-                                        <input type="hidden" class="form-control" name="tipe" id="tipe" value="1">
+                                        <input type="hidden" class="form-control" name="status" id="status" value="1">
                                     </div>
                                 </div>
                                 <div class="row mb-3 st-masuk">
@@ -43,7 +43,7 @@
                                 <div class="row mb-3">
                                     <label for="asal" class="col-sm-3 col-form-label">Asal Kirim</label>
                                     <div class="col-sm-9">
-                                        <select class="form-select select2" aria-label="Default select example" name="asal" id="asal">
+                                        <select class="form-select select2" aria-label="Default select example" name="asal_tujuan" id="asal_tujuan">
                                             <option selected>-- Pilih Asal Kirim --</option>
                                             <option value="1">Project / Gudang Cabang</option>
                                             <option value="2">Supplier</option>
@@ -117,7 +117,7 @@
         </div>
     </div>
 </section>
-@includeIf('transaksi.modal')
+@includeIf('transaksi.stok_masuk.modal')
 @endsection
 
 @push('script')
@@ -206,8 +206,7 @@
             url: '/get-stok-now/' + sku,
             method: 'GET',
             success: function(result) {
-                $('#gudang_bekas').val(result.stok_bekas)
-                $('#gudang_baru').val(result.stok_baru)
+                $('#stok_gudang').val(result)
             },
         });
     }).on('click','#sv-barang',function(){
@@ -227,12 +226,8 @@
         }).then((result) => {
             if (result.isConfirmed) {
                 if(tipe == 2){
-                    if(parseInt(bekas) > parseInt(gudang_bekas)){
+                    if(parseInt(stok) > parseInt(stok_gudang)){
                         errorMsg("stok barang bekas di gudang lebih kecil, silahkan turunkan jumlah anda!");
-                        return false;
-                    }
-                    if(parseInt(gudang_baru) < parseInt(baru)){
-                        errorMsg("stok barang baru di gudang lebih kecil, silahkan turunkan jumlah anda!");
                         return false;
                     }
                 }
@@ -286,7 +281,7 @@
                 });
             }
         });
-    }).on('change','#asal',function(){
+    }).on('change','#asal_tujuan',function(){
         var asal = $(this).val();
 
         if(asal == 1){

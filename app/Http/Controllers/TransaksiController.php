@@ -7,7 +7,9 @@ use App\Models\HistoryStok;
 use App\Models\HistoryStokDetail;
 use App\Models\Project;
 use App\Models\Sku;
+use App\Models\Stok;
 use App\Models\Supplier;
+use App\Models\Transaksi;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -30,10 +32,10 @@ class TransaksiController extends Controller
         $data['project'] = Project::orderBy('id','desc')->get();
         $data['supplier'] = Supplier::get();
 
-        return view('transaksi.index-masuk',$data);
+        return view('transaksi.stok_masuk.index',$data);
     }
 
-    public function store(Request $request){
+    public function storeOld(Request $request){
         $validator = Validator::make($request->all(), [
             'status' => 'required',
             'keterangan' => 'required',
@@ -85,6 +87,59 @@ class TransaksiController extends Controller
         }
     }
 
+    public function store(Request $request){
+        $validator = Validator::make($request->all(), [
+            'status' => 'required',
+            'keterangan' => 'required',
+            'user_id' => 'required',
+            'tanggal' => 'required',
+            'no_surat_jalan' => 'required',
+        ], [
+            'status.required' => 'Tipe tidak boleh kosong!',
+            'keterangan.required' => 'Keterangan tidak boleh kosong!',
+            'user_id.required' => 'PIC tidak boleh kosong!',
+            'tanggal.required' => 'Tanggal tidak boleh kosong!',
+            'no_surat_jalan.required' => 'No Surat Jalan tidak boleh kosong!',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()->all()]);
+        }
+
+        $data = [
+            'tanggal' =>$request->tanggal,
+            'user_id' => $request->user_id,
+            'status' => $request->status,
+            'keterangan' => $request->keterangan,
+            'deskripsi' => $request->deskripsi,
+            'no_surat_jalan' => $request->no_surat_jalan,
+            'asal_tujuan' => $request->asal_tujuan
+        ];
+
+        if($request->asal_tujuan == 1){
+            $data = array_merge($data,['project_id' => $request->project]);
+        }elseif($request->asal_tujuan == 2){
+            $data = array_merge($data,['supplier_id' => $request->supplier]);
+        }elseif($request->asal_tujuan == 3){
+            $data = array_merge($data,['client_id' => $request->client]);
+        }
+
+        if($request->status == 2){
+            $data = array_merge($data,[
+                'driver' => $request->driver,
+                'nopol' => $request->nopol,
+                'penerima' => $request->penerima,
+            ]);
+        }
+
+        try {
+            $transaksi = Transaksi::updateOrCreate(['id' => $request->id],$data);
+            return response()->json(['success' => 'Berhasil menyimpan data!', 'id' => $transaksi->id]);
+        } catch (\Throwable $th) {
+            return response()->json(['error' => 'Terjadi Kesalahan, gagal menyimpan data!']);
+        }
+    }
+
     public function getSku($id){
         $data = Sku::where('barang_id',$id)->get();
 
@@ -92,7 +147,8 @@ class TransaksiController extends Controller
     }
     
     public function getStok($id){
-        $data = Sku::find($id);
+        // $data = Sku::find($id);
+        $data = Stok::where('sku_id',$id)->whereNotNull('lokasi_id')->sum('stok');
 
         return response()->json($data);
     }

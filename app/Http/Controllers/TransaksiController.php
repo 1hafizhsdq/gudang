@@ -6,11 +6,13 @@ use App\Models\Barang;
 use App\Models\HistoryStok;
 use App\Models\HistoryStokDetail;
 use App\Models\Lokasi;
+use App\Models\Merk;
 use App\Models\Project;
 use App\Models\Sku;
 use App\Models\Stok;
 use App\Models\Supplier;
 use App\Models\Transaksi;
+use App\Models\Type;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -28,7 +30,7 @@ class TransaksiController extends Controller
 
     public function indexMasuk(){
         $data['title'] = "Stok Masuk";
-        $data['barang'] = Barang::get();
+        $data['merk'] = Merk::get();
         $data['pic'] = User::get();
         $data['project'] = Project::orderBy('id','desc')->get();
         $data['supplier'] = Supplier::get();
@@ -156,6 +158,18 @@ class TransaksiController extends Controller
     public function getStok($id){
         // $data = Sku::find($id);
         $data = Stok::where('sku_id',$id)->whereNotNull('lokasi_id')->sum('stok');
+
+        return response()->json($data);
+    }
+    
+    public function getType($id){
+        $data = Type::where('merk_id',$id)->get();
+
+        return response()->json($data);
+    }
+    
+    public function getBarang($idmerk,$idtype){
+        $data = Barang::where('merk_id',$idmerk)->where('type_id',$idtype)->first();
 
         return response()->json($data);
     }

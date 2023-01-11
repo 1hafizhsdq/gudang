@@ -186,8 +186,9 @@
                 }
             },
         });
-    }).on('change','#barang_id',function(){
-        var barang = $(this).val();
+    }).on('change','#type',function(){
+        var barang = $('#barang_id').val();
+        $('#sku_id').html('');
         
         $.ajax({
             url: '/get-sku/' + barang,
@@ -307,6 +308,33 @@
     }).on('change','#project',function(){
         var project = $(this).find(':selected').data('nama');
         $('#nama_project').val(project);
+    }).on('change','#merk',function(){
+        var idmerk = $(this).val();
+        
+        $.ajax({
+            url: '/get-type/'+idmerk,
+            method: 'GET',
+            success: function(result) {
+                var option = '<option>-- Pilih Type --</option>'
+                $.each(result, function(key, val) {
+                    option += '<option value="'+val.id+'">'+val.type+'</option>'
+                });
+                $('#type').html(option);
+            },
+        });
+    }).on('change','#type',function(){
+        var idmerk = $('#merk').val();
+        var idtype = $(this).val();
+        
+        $.ajax({
+            url: '/get-barang/'+idmerk+'/'+idtype,
+            method: 'GET',
+            success: function(result) {
+                $('#barang_id').val(result.id);
+                $('#nama_barang').val(result.nama_barang);
+            },
+        });
     });
+
 </script>
 @endpush

@@ -10,14 +10,39 @@
                     @csrf
                     <br>
                     <div class="row mb-3">
-                        <label class="col-sm-2 col-form-label">Barang</label>
+                        <label class="col-sm-2 col-form-label">Lokasi Barang Akan Disimpan</label>
                         <div class="col-sm-10">
-                            <select class="form-select select2-modal" aria-label="Default select example" name="barang_id" id="barang_id">
-                                <option selected="">-- Pilih Barang --</option>
-                                @foreach ($barang as $br)
-                                    <option value="{{ $br->id }}">{{ $br->merk->merk }} - {{ $br->type->type }} - {{ $br->nama_barang }}</option>
+                            <select class="form-select select2-modal" aria-label="Default select example" name="lokasi_id" id="lokasi_id">
+                                <option selected="">-- Pilih Lokasi --</option>
+                                @foreach ($lokasi as $lk)
+                                    <option value="{{ $lk->id }}">{{ $lk->lokasi }}</option>
                                 @endforeach
                             </select>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <label class="col-sm-2 col-form-label">Merk</label>
+                        <div class="col-sm-10">
+                            <select class="form-select select2-modal" aria-label="Default select example" name="merk" id="merk">
+                                <option selected="">-- Pilih Merk --</option>
+                                @foreach ($merk as $mr)
+                                    <option value="{{ $mr->id }}">{{ $mr->merk }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <label class="col-sm-2 col-form-label">Type</label>
+                        <div class="col-sm-10">
+                            <select class="form-select select2-modal" aria-label="Default select example" name="type" id="type">
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <label class="col-sm-2 col-form-label">Nama Barang</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" name="nama_barang" id="nama_barang" readonly>
+                            <input type="text" class="form-control" name="barang_id" id="barang_id" readonly>
                         </div>
                     </div>
                     <div class="row mb-3">
@@ -31,24 +56,13 @@
                         <label class="col-sm-12 col-form-label">Stok</label>
                         <div class="row">
                             <div class="col-6">
-                                <label class="col-sm-6 col-form-label">Stok</label>
+                                <label class="col-sm-6 col-form-label">Stok Gudang</label>
                                 <input type="text" class="form-control" name="stok_gudang" id="stok_gudang" readonly>
                             </div>
                             <div class="col-6">
                                 <label class="col-sm-6 col-form-label">Jumlah</label>
                                 <input type="text" class="form-control" name="stok" id="stok" onkeypress="return isNumber(event)" value="0">
                             </div>
-                        </div>
-                    </div>
-                    <div class="row mb-3">
-                        <label class="col-sm-2 col-form-label">Lokasi</label>
-                        <div class="col-sm-10">
-                            <select class="form-select select2-modal" aria-label="Default select example" name="lokasi_id" id="lokasi_id">
-                                <option selected="">-- Pilih Lokasi --</option>
-                                @foreach ($lokasi as $lk)
-                                    <option value="{{ $lk->id }}">{{ $lk->lokasi }}</option>
-                                @endforeach
-                            </select>
                         </div>
                     </div>
                     <input type="hidden" name="history_id" id="history_id">

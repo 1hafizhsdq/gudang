@@ -95,6 +95,8 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/post-barang', [TransaksiController::class, 'storeBarang'])->name('post-barang');
     Route::get('/get-form/{status}', [TransaksiController::class, 'getForm'])->name('get-form');
     Route::get('/get-project', [TransaksiController::class, 'getProject'])->name('get-project');
+    Route::get('/get-type/{idmerk}', [TransaksiController::class, 'getType'])->name('get-type');
+    Route::get('/get-barang/{idmerk}/{idtype}', [TransaksiController::class, 'getBarang'])->name('get-barang');
 
     // cek stok
     Route::get('/cek-stok', [CekStokController::class, 'index'])->name('cek-stok');

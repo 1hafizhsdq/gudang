@@ -119,6 +119,11 @@ class TransaksiController extends Controller
         ];
 
         if($request->asal_tujuan == 1){
+            try {
+                Project::updateOrCreate(['id' => $request->project],['id' => $request->project,'nama_project' => $request->nama_project]);
+            } catch (\Throwable $th) {
+                return response()->json(['error' => 'Terjadi Kesalahan, gagal menyimpan data! '.$th->message]);
+            }
             $data = array_merge($data,['project_id' => $request->project]);
         }elseif($request->asal_tujuan == 2){
             $data = array_merge($data,['supplier_id' => $request->supplier]);

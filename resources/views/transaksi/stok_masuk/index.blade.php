@@ -66,6 +66,7 @@
                                     <div class="col-sm-9">
                                         <select class="form-select select2" aria-label="Default select example" name="project" id="project" disabled>
                                         </select>
+                                        <input type="hidden" class="form-control" name="nama_project" id="nama_project">
                                     </div>
                                 </div>
                                 <div class="row mb-3">
@@ -294,7 +295,7 @@
                 success: function(result) {
                     var option = '<option>-- Pilih Project --</option>'
                     $.each(result, function(key, val) {
-                        option += '<option value="'+val.id+'">'+val.project+'</option>'
+                        option += '<option value="'+val.id+'" data-nama="'+val.project+'">'+val.project+'</option>'
                     });
                     $('#project').html(option);
                 },
@@ -303,7 +304,9 @@
             $('#project').attr('disabled','disabled');
             $('#supplier').removeAttr('disabled');
         }
-        
+    }).on('change','#project',function(){
+        var project = $(this).find(':selected').data('nama');
+        $('#nama_project').val(project);
     });
 </script>
 @endpush

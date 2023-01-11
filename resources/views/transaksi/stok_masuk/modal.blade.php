@@ -40,6 +40,17 @@
                             </div>
                         </div>
                     </div>
+                    <div class="row mb-3">
+                        <label class="col-sm-2 col-form-label">Lokasi</label>
+                        <div class="col-sm-10">
+                            <select class="form-select select2-modal" aria-label="Default select example" name="lokasi_id" id="lokasi_id">
+                                <option selected="">-- Pilih Lokasi --</option>
+                                @foreach ($lokasi as $lk)
+                                    <option value="{{ $lk->id }}">{{ $lk->lokasi }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
                     <input type="hidden" name="history_id" id="history_id">
                     <input type="hidden" name="status_tipe" id="status_tipe">
             </div>

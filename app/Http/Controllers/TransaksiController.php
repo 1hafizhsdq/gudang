@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Barang;
 use App\Models\HistoryStok;
 use App\Models\HistoryStokDetail;
+use App\Models\Lokasi;
 use App\Models\Project;
 use App\Models\Sku;
 use App\Models\Stok;
@@ -31,6 +32,7 @@ class TransaksiController extends Controller
         $data['pic'] = User::get();
         $data['project'] = Project::orderBy('id','desc')->get();
         $data['supplier'] = Supplier::get();
+        $data['lokasi'] = Lokasi::get();
 
         return view('transaksi.stok_masuk.index',$data);
     }

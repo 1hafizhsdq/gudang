@@ -103,8 +103,8 @@
                                         <tr>
                                             <th>Barang</th>
                                             <th>SKU</th>
-                                            <th>Baru</th>
-                                            <th>Bekas</th>
+                                            <th>Lokasi</th>
+                                            <th>Qty</th>
                                         </tr>
                                     </thead>
                                     <tbody id="tbody">
@@ -144,10 +144,18 @@
             if($('#id').val() == ''){
                 errorMsg('Tipe dan keterangan belum tersimpan/tidak ada, simpan terlibh dahulu tipe & keterangan anda!');
             }else{
-                $('#history_id').val($('#id').val());
+                $('#transaksi_id').val($('#id').val());
                 $('#status_tipe').val($('#status').val());
                 $('#modal-barang').modal('show');
             }
+            $('#lokasi_id').val('').trigger('change');
+            $('#merk').val('').trigger('change');
+            $('#type').html('');
+            $('#nama_barang').val('');
+            $('#barang_id').val('');
+            $('#sku_id').html('');
+            $('#stok_gudang').val('');
+            $('#stok').val('');
         });
     }).on('click','#sv',function(){
         var form = $('#form-transaksi'),
@@ -184,21 +192,6 @@
                         <button type="button" id="sv" class="btn btn-primary">Simpan</button>
                     `);
                 }
-            },
-        });
-    }).on('change','#type',function(){
-        var barang = $('#barang_id').val();
-        $('#sku_id').html('');
-        
-        $.ajax({
-            url: '/get-sku/' + barang,
-            method: 'GET',
-            success: function(result) {
-                var option = '<option>-- Pilih SKU --</option>'
-                $.each(result, function(key, val) {
-                    option += '<option value="'+val.id+'">'+val.sku+' - '+val.varian+'</option>'
-                });
-                $('#sku_id').html(option);
             },
         });
     }).on('change','#sku_id',function(){
@@ -266,8 +259,8 @@
                                 <tr>
                                     <td>`+val.sku.barang.nama_barang+`</td>
                                     <td>`+val.sku.sku+` - `+val.sku.varian+`</td>
-                                    <td>`+val.stok_baru+`</td>
-                                    <td>`+val.stok_bekas+`</td>
+                                    <td>`+val.lokasi.lokasi+`</td>
+                                    <td>`+val.qty+`</td>
                                 </tr>`
                             });
                             $('#tbody').html(tbody)
@@ -325,6 +318,7 @@
     }).on('change','#type',function(){
         var idmerk = $('#merk').val();
         var idtype = $(this).val();
+        $('#sku_id').html();
         
         $.ajax({
             url: '/get-barang/'+idmerk+'/'+idtype,
@@ -332,6 +326,12 @@
             success: function(result) {
                 $('#barang_id').val(result.id);
                 $('#nama_barang').val(result.nama_barang);
+
+                var option = '<option>-- Pilih SKU --</option>'
+                $.each(result.sku, function(key, val) {
+                    option += '<option value="'+val.id+'">'+val.sku+' - '+val.varian+'</option>'
+                });
+                $('#sku_id').html(option);
             },
         });
     });

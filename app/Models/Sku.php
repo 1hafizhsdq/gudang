@@ -14,6 +14,11 @@ class Sku extends Model
     {
         return $this->hasMany(HistoryStokDetail::class);
     }
+    
+    public function transaksiDetail()
+    {
+        return $this->hasMany(TransaksiDetail::class);
+    }
 
     public function barang()
     {

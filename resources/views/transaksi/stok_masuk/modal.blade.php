@@ -42,7 +42,7 @@
                         <label class="col-sm-2 col-form-label">Nama Barang</label>
                         <div class="col-sm-10">
                             <input type="text" class="form-control" name="nama_barang" id="nama_barang" readonly>
-                            <input type="text" class="form-control" name="barang_id" id="barang_id" readonly>
+                            <input type="hidden" class="form-control" name="barang_id" id="barang_id" readonly>
                         </div>
                     </div>
                     <div class="row mb-3">
@@ -65,7 +65,7 @@
                             </div>
                         </div>
                     </div>
-                    <input type="hidden" name="history_id" id="history_id">
+                    <input type="hidden" name="transaksi_id" id="transaksi_id">
                     <input type="hidden" name="status_tipe" id="status_tipe">
             </div>
             <div class="modal-footer">

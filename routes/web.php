@@ -3,6 +3,7 @@
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\BarangController;
 use App\Http\Controllers\CekStokController;
+use App\Http\Controllers\ClientController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\KategoriController;
 use App\Http\Controllers\LokasiController;
@@ -67,6 +68,10 @@ Route::middleware(['auth', 'role:1'])->group(function () {
     // master supplier
     Route::resource('/supplier', SupplierController::class);
     Route::get('/list-supplier', [SupplierController::class, 'listSupplier'])->name('list-supplier');
+    
+    // master client
+    Route::resource('/client', ClientController::class);
+    Route::get('/list-client', [ClientController::class, 'listClient'])->name('list-client');
     
     // master project
     Route::resource('/project', ProjectController::class);

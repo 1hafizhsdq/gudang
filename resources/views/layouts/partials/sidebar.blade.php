@@ -52,6 +52,11 @@
                         <i class="bi bi-circle"></i><span>Lokasi</span>
                     </a>
                 </li>
+                <li>
+                    <a class="nav-link {{ ($title == 'Client') ? '' : 'collapsed' }}" href="{{ url('client') }}">
+                        <i class="bi bi-circle"></i><span>Client</span>
+                    </a>
+                </li>
             </ul>
         </li><!-- End Components Nav -->
         @endif

@@ -25,7 +25,7 @@
                                 <div class="row mb-3" style="display: none;">
                                     <label class="col-sm-3 col-form-label">Status</label>
                                     <div class="col-sm-9">
-                                        <input type="hidden" class="form-control" name="status" id="status" value="1">
+                                        <input type="hidden" class="form-control" name="status" id="status" value="2">
                                     </div>
                                 </div>
                                 <div class="row mb-3 st-masuk">
@@ -55,6 +55,9 @@
                                     <div class="col-sm-9">
                                         <select class="form-select select2" aria-label="Default select example" name="client" id="client" disabled>
                                             <option selected>-- Pilih Client --</option>
+                                            @foreach ($client as $cl)
+                                                <option value="{{ $cl->id }}">{{ $cl->nama }}</option>
+                                            @endforeach
                                         </select>
                                     </div>
                                 </div>
@@ -211,9 +214,15 @@
         });
     }).on('change','#sku_id',function(){
         var sku = $(this).val();
+        var lokasi = $('#lokasi_id').val();
+
+        if(lokasi == null){
+            errorMsg("Lokasi Barang Akan Disimpan tidak boleh kosong!");
+            return false;
+        }
         
         $.ajax({
-            url: '/get-stok-now/' + sku,
+            url: '/get-stok-now-by-lokasi/' + sku + '/' + lokasi,
             method: 'GET',
             success: function(result) {
                 $('#stok_gudang').val(result)
@@ -221,10 +230,8 @@
         });
     }).on('click','#sv-barang',function(){
         var tipe = $('#status').val(),
-            gudang_bekas = $('#gudang_bekas').val(),
-            gudang_baru = $('#gudang_baru').val(),
-            bekas = $('#bekas').val(),
-            baru = $('#baru').val();
+            stok_gudang = $('#stok_gudang').val(),
+            stok = $('#stok').val();
 
         Swal.fire({
             icon: 'warning',
@@ -296,7 +303,7 @@
 
         if(asal == 1){
             $('#project').removeAttr('disabled');
-            $('#supplier').attr('disabled','disabled');
+            $('#client').attr('disabled','disabled');
             
             $.ajax({
                 url: '/get-project/',
@@ -311,7 +318,7 @@
             });
         }else{
             $('#project').attr('disabled','disabled');
-            $('#supplier').removeAttr('disabled');
+            $('#client').removeAttr('disabled');
         }
     }).on('change','#project',function(){
         var project = $(this).find(':selected').data('nama');

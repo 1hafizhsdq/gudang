@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Barang;
+use App\Models\Client;
 use App\Models\HistoryStok;
 use App\Models\HistoryStokDetail;
 use App\Models\Lokasi;
@@ -47,6 +48,7 @@ class TransaksiController extends Controller
         $data['pic'] = User::get();
         $data['project'] = Project::orderBy('id','desc')->get();
         $data['lokasi'] = Lokasi::get();
+        $data['client'] = Client::get();
 
         return view('transaksi.stok_keluar.index',$data);
     }
@@ -174,6 +176,13 @@ class TransaksiController extends Controller
         return response()->json($data);
     }
     
+    public function getStokByLokasi($skuid,$lokasiid){
+        // $data = Sku::find($id);
+        $data = Stok::where('sku_id',$skuid)->where('lokasi_id',$lokasiid)->whereNotNull('lokasi_id')->sum('stok');
+
+        return response()->json($data);
+    }
+    
     public function getType($id){
         $data = Type::where('merk_id',$id)->get();
 
@@ -229,6 +238,36 @@ class TransaksiController extends Controller
             Sku::updateOrCreate(
                 ['id' => $request->sku_id, 'barang_id' => $request->barang_id],
                 ['stok_baru' => DB::raw('stok_baru+'.$request->stok)]
+            );
+
+            $jmlStok = Stok::where('barang_id',$request->barang_id)->sum('stok');
+            Barang::where('id',$request->barang_id)->update([
+                'stok_total' => $jmlStok
+            ]);
+        }else{
+            if($request->asal_tujuan == 1){
+                $project = $request->project;
+                $lokasi = 0;
+            }else{
+                $project = 0;
+                $lokasi = $request->lokasi_id;
+            }
+
+            Stok::updateOrCreate(
+                [
+                    'barang_id' => $request->barang_id,
+                    'sku_id' => $request->sku_id,
+                    'project_id' => $project,
+                    'lokasi_id' => $lokasi
+                ],
+                [
+                    'stok' => DB::raw('stok-'.$request->stok)
+                ]
+            );
+
+            Sku::updateOrCreate(
+                ['id' => $request->sku_id, 'barang_id' => $request->barang_id],
+                ['stok_baru' => DB::raw('stok_baru-'.$request->stok)]
             );
 
             $jmlStok = Stok::where('barang_id',$request->barang_id)->sum('stok');

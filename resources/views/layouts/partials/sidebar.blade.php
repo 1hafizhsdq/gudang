@@ -60,12 +60,12 @@
             </ul>
         </li><!-- End Components Nav -->
         @endif
-        <li class="nav-item">
+        {{-- <li class="nav-item">
             <a class="nav-link {{ ($title == 'Transaksi Stok') ? '' : 'collapsed' }}" href="{{ url('tr-stok') }}">
                 <i class="bi bi-cart"></i>
                 <span>Transaksi Stok</span>
             </a>
-        </li>
+        </li> --}}
         <li class="nav-item">
             <a class="nav-link collapsed" data-bs-target="#transaksi-nav" data-bs-toggle="collapse" href="#">
                 <i class="bi bi-cart"></i><span>Transaksi Stok</span><i class="bi bi-chevron-down ms-auto"></i>

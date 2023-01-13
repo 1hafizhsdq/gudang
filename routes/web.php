@@ -98,6 +98,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/post-tr-stok', [TransaksiController::class, 'store'])->name('post-tr-stok');
     Route::get('/get-sku/{id}', [TransaksiController::class, 'getSku'])->name('get-sku');
     Route::get('/get-stok-now/{id}', [TransaksiController::class, 'getStok'])->name('get-stok-now');
+    Route::get('/get-stok-now-by-lokasi/{skuid}/{lokasiid}', [TransaksiController::class, 'getStokByLokasi'])->name('get-stok-now-by-lokasi');
     Route::post('/post-barang', [TransaksiController::class, 'storeBarang'])->name('post-barang');
     Route::get('/get-form/{status}', [TransaksiController::class, 'getForm'])->name('get-form');
     Route::get('/get-project', [TransaksiController::class, 'getProject'])->name('get-project');

@@ -67,13 +67,13 @@
             </a>
             <ul id="transaksi-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
                 <li>
-                    <a class="nav-link {{ ($title == 'Stok Masuk') ? '' : 'collapsed' }}" href="{{ url('tr-stok-masuk') }}">
-                        <i class="bi bi-circle"></i><span>Stok Masuk</span>
+                    <a class="nav-link {{ ($title == 'Transaksi Stok Masuk') ? '' : 'collapsed' }}" href="{{ url('tr-stok-masuk') }}">
+                        <i class="bi bi-circle"></i><span>Transaksi Stok Masuk</span>
                     </a>
                 </li>
                 <li>
-                    <a class="nav-link {{ ($title == 'Satuan') ? '' : 'collapsed' }}" href="{{ url('satuan') }}">
-                        <i class="bi bi-circle"></i><span>Stok Keluar</span>
+                    <a class="nav-link {{ ($title == 'Transaksi Stok Keluar') ? '' : 'collapsed' }}" href="{{ url('tr-stok-keluar') }}">
+                        <i class="bi bi-circle"></i><span>Transaksi Stok Keluar</span>
                     </a>
                 </li>
             </ul>

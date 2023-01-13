@@ -31,7 +31,7 @@ class TransaksiController extends Controller
     }
 
     public function indexMasuk(){
-        $data['title'] = "Stok Masuk";
+        $data['title'] = "Transaksi Stok Masuk";
         $data['merk'] = Merk::get();
         $data['pic'] = User::get();
         $data['project'] = Project::orderBy('id','desc')->get();
@@ -39,6 +39,16 @@ class TransaksiController extends Controller
         $data['lokasi'] = Lokasi::get();
 
         return view('transaksi.stok_masuk.index',$data);
+    }
+
+    public function indexKeluar(){
+        $data['title'] = "Transaksi Stok Keluar";
+        $data['merk'] = Merk::get();
+        $data['pic'] = User::get();
+        $data['project'] = Project::orderBy('id','desc')->get();
+        $data['lokasi'] = Lokasi::get();
+
+        return view('transaksi.stok_keluar.index',$data);
     }
 
     public function storeOld(Request $request){

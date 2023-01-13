@@ -89,6 +89,7 @@ Route::middleware(['auth'])->group(function () {
     // master transaksi stok
     Route::get('/tr-stok', [TransaksiController::class, 'index'])->name('tr-stok');
     Route::get('/tr-stok-masuk', [TransaksiController::class, 'indexMasuk'])->name('tr-stok-masuk');
+    Route::get('/tr-stok-keluar', [TransaksiController::class, 'indexKeluar'])->name('tr-stok-keluar');
     Route::post('/post-tr-stok', [TransaksiController::class, 'store'])->name('post-tr-stok');
     Route::get('/get-sku/{id}', [TransaksiController::class, 'getSku'])->name('get-sku');
     Route::get('/get-stok-now/{id}', [TransaksiController::class, 'getStok'])->name('get-stok-now');

@@ -16,39 +16,45 @@
                     <br>
                     <div class="row mb-3">
                         <label for="inputText" class="col-sm-2 col-form-label"><b>No Surat Jalan</b></label>
-                        <div class="col-sm-10">{{ $history->no_surat_jalan }}</div>
+                        <div class="col-sm-10">{{ $transaksi->no_surat_jalan }}</div>
                     </div>
                     <div class="row mb-3">
                         <label for="inputText" class="col-sm-2 col-form-label"><b>Tanggal</b></label>
-                        <div class="col-sm-10">{{ $history->tanggal }}</div>
+                        <div class="col-sm-10">{{ $transaksi->tanggal }}</div>
                     </div>
                     <div class="row mb-3">
                         <label for="inputText" class="col-sm-2 col-form-label"><b>PIC</b></label>
-                        <div class="col-sm-10">{{ $history->user->name }}</div>
+                        <div class="col-sm-10">{{ $transaksi->user->name }}</div>
                     </div>
                     <div class="row mb-3">
-                        <label for="inputText" class="col-sm-2 col-form-label"><b>Project</b></label>
-                        <div class="col-sm-10">{{ $history->project->nama_project }}</div>
+                        <label for="inputText" class="col-sm-2 col-form-label"><b>Tujuan</b></label>
+                        <div class="col-sm-10">
+                            @if ($transaksi->asal_tujuan == 1)
+                                GUDANG {{ $transaksi->project->nama_project }}
+                            @elseif ($transaksi->asal_tujuan == 3)
+                                {{ $transaksi->client->nama }}
+                            @endif
+                        </div>
                     </div>
                     <div class="row mb-3">
                         <label for="inputText" class="col-sm-2 col-form-label"><b>Driver</b></label>
-                        <div class="col-sm-10">{{ $history->driver }}</div>
+                        <div class="col-sm-10">{{ $transaksi->driver }}</div>
                     </div>
                     <div class="row mb-3">
                         <label for="inputText" class="col-sm-2 col-form-label"><b>Nopol</b></label>
-                        <div class="col-sm-10">{{ $history->nopol }}</div>
+                        <div class="col-sm-10">{{ $transaksi->nopol }}</div>
                     </div>
                     <div class="row mb-3">
                         <label for="inputText" class="col-sm-2 col-form-label"><b>Penerima</b></label>
-                        <div class="col-sm-10">{{ $history->penerima }}</div>
+                        <div class="col-sm-10">{{ $transaksi->penerima }}</div>
                     </div>
                     <div class="row mb-3">
                         <label for="inputText" class="col-sm-2 col-form-label"><b>Deskripsi</b></label>
-                        <div class="col-sm-10">{{ $history->deskripsi }}</div>
+                        <div class="col-sm-10">{{ $transaksi->deskripsi }}</div>
                     </div>
                     <div class="row mb-3">
                         <label for="inputText" class="col-sm-2 col-form-label"><b>Keterangan</b></label>
-                        <div class="col-sm-10">{{ $history->keterangan }}</div>
+                        <div class="col-sm-10">{{ $transaksi->keterangan }}</div>
                     </div>
                     <table class="table" id="datatable">
                         <thead>
@@ -56,22 +62,18 @@
                                 <th scope="col">#</th>
                                 <th scope="col">Barang</th>
                                 <th scope="col">SKU</th>
-                                <th scope="col">Stok Baru</th>
-                                <th scope="col">Stok Bekas</th>
-                                <th scope="col">Update Stok Baru</th>
-                                <th scope="col">Update Stok Bekas</th>
+                                <th scope="col">Qty</th>
+                                <th scope="col">Lokasi Barang Diambil</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($historyDetail as $hd)
+                            @foreach ($transaksiDetail as $td)
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
-                                    <td>{{ $hd->sku->barang->nama_barang }}</td>
-                                    <td>{{ $hd->sku->sku }} {{ $hd->sku->varian }}</td>
-                                    <td>{{ $hd->stok_baru }} {{ $hd->sku->barang->satuan->satuan }}</td>
-                                    <td>{{ $hd->stok_bekas }} {{ $hd->sku->barang->satuan->satuan }}</td>
-                                    <td>{{ $hd->update_stok_baru }} {{ $hd->sku->barang->satuan->satuan }}</td>
-                                    <td>{{ $hd->update_stok_bekas }} {{ $hd->sku->barang->satuan->satuan }}</td>
+                                    <td>{{ $td->sku->barang->merk->merk }} {{ $td->sku->barang->type->type }} {{ $td->sku->barang->nama_barang }}</td>
+                                    <td>{{ $td->sku->sku }} {{ $td->sku->varian }}</td>
+                                    <td>{{ $td->qty }} {{ $td->sku->barang->satuan->satuan }}</td>
+                                    <td>{{ $td->lokasi->lokasi }}</td>
                                 </tr>
                             @endforeach
                         </tbody>

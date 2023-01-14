@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\HistoryStok;
 use App\Models\HistoryStokDetail;
+use App\Models\Transaksi;
+use App\Models\TransaksiDetail;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -20,9 +22,9 @@ class StokMasukController extends Controller
 
     public function listMasuk(){
         if(Auth::user()->role == 1){
-            $data = HistoryStok::with('user')->whereStatus('1')->whereMonth('tanggal',date('m'))->whereYear('tanggal', date('Y'))->orderBy('tanggal','desc')->get();
+            $data = Transaksi::with('user')->whereStatus('1')->whereMonth('tanggal',date('m'))->whereYear('tanggal', date('Y'))->orderBy('tanggal','desc')->get();
         }else{
-            $data = HistoryStok::with('user')->whereStatus('1')->whereUser_id(Auth::user()->id)->whereMonth('tanggal',date('m'))->whereYear('tanggal', date('Y'))->orderBy('tanggal','desc')->get();
+            $data = Transaksi::with('user')->whereStatus('1')->whereUser_id(Auth::user()->id)->whereMonth('tanggal',date('m'))->whereYear('tanggal', date('Y'))->orderBy('tanggal','desc')->get();
         }
         
         return DataTables::of($data)
@@ -72,8 +74,8 @@ class StokMasukController extends Controller
 
     public function detail($id){
         $data['title'] = 'Stok Masuk';
-        $data['history'] = HistoryStok::with('user')->find($id);
-        $data['historyDetail'] = HistoryStokDetail::with('sku.barang.satuan')->whereHistory_id($id)->get();
+        $data['transaksi'] = Transaksi::with('user')->find($id);
+        $data['transaksiDetail'] = TransaksiDetail::with('sku.barang.satuan')->whereTransaksi_id($id)->get();
 
         return view('stok_masuk.detail',$data);
     }

@@ -45,9 +45,9 @@ class StokMasukController extends Controller
     public function listMasukFilter(Request $request)
     {
         if (Auth::user()->role == 1) {
-            $data = HistoryStok::with('user')->whereStatus('1');
+            $data = Transaksi::with('user')->whereStatus('1');
         } else {
-            $data = HistoryStok::with('user')->whereStatus('1')->whereUser_id(Auth::user()->id);
+            $data = Transaksi::with('user')->whereStatus('1')->whereUser_id(Auth::user()->id);
         }
 
         $bulan = join(",", $request->bulan);

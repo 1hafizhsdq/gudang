@@ -14,6 +14,7 @@
             <div class="card">
                 <div class="card-body">
                     <br>
+                    <a href="#" id="surat-jalan" class="btn btn-sm btn-primary surat-jalan" data-id="{{ $transaksi->id }}" onclick="suratJalan(' . $data->id . ')" title="surat Jalan"><i class="bi bi-card-text"></i> Cetak Surat Jalan</a>
                     <div class="row mb-3">
                         <label for="inputText" class="col-sm-2 col-form-label"><b>No Surat Jalan</b></label>
                         <div class="col-sm-10">{{ $transaksi->no_surat_jalan }}</div>
@@ -83,12 +84,25 @@
         </div>
     </div>
 </section>
+@includeIf('stok_keluar.modal')
 @endsection
 
 @push('script')
 <script>
     $('#datatable').DataTable({
         responsive: true
+    });
+    $(document).ready(function(){
+        $('.surat-jalan').click(function(){
+            var href = $(this).attr('href');
+        
+            if(href == "#"){
+                $('#id').val($(this).data('id'));
+                $('#modal-suratjalan').modal('show');
+            }
+        })
+    }).on('click','#sv-kop',function(){
+        $('#modal-suratjalan').modal('hide');
     });
 </script>
 @endpush

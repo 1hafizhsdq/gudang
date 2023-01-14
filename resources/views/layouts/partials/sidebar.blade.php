@@ -90,6 +90,25 @@
             </a>
         </li>
         <li class="nav-item">
+            <a class="nav-link collapsed" data-bs-target="#laporan-transaksi-nav" data-bs-toggle="collapse" href="#">
+                <i class="bi bi-cart"></i><span>Laporan Transaksi</span><i class="bi bi-chevron-down ms-auto"></i>
+            </a>
+            <ul id="laporan-transaksi-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+                <li>
+                    <a class="nav-link {{ ($title == 'Stok Masuk') ? '' : 'collapsed' }}" href="{{ url('stok-masuk') }}">
+                        <i class="bi bi-arrows-angle-contract"></i>
+                        <span>Stok Masuk</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="nav-link {{ ($title == 'Stok Keluar') ? '' : 'collapsed' }}" href="{{ url('stok-keluar') }}">
+                        <i class="bi bi-arrows-angle-expand"></i>
+                        <span>Stok Keluar</span>
+                    </a>
+                </li>
+            </ul>
+        </li>
+        {{-- <li class="nav-item">
             <a class="nav-link {{ ($title == 'Stok Masuk') ? '' : 'collapsed' }}" href="{{ url('stok-masuk') }}">
                 <i class="bi bi-arrows-angle-contract"></i>
                 <span>Stok Masuk</span>
@@ -100,7 +119,7 @@
                 <i class="bi bi-arrows-angle-expand"></i>
                 <span>Stok Keluar</span>
             </a>
-        </li>
+        </li> --}}
         {{-- <li class="nav-item">
             <a class="nav-link collapsed" data-bs-target="#laporan-nav" data-bs-toggle="collapse" href="#">
                 <i class="bi bi-clipboard-data"></i><span>Laporan</span><i class="bi bi-chevron-down ms-auto"></i>

@@ -97,7 +97,7 @@
                                 </div>
                             </div>
                             <div class="col">
-                                <a id="add-barang" class="btn btn-primary mb-2">Tambah Barang</a>
+                                {{-- <a id="add-barang" class="btn btn-primary mb-2">Tambah Barang</a> --}}
                                 <table class="table">
                                     <thead class="table-secondary">
                                         <tr>
@@ -110,6 +110,14 @@
                                     <tbody id="tbody">
                                     </tbody>
                                 </table>
+                                <div class="row">
+                                    <div class="col-6">
+                                        <a id="add-barang" class="btn w-100 btn-block btn-primary mb-2">Tambah Barang</a>
+                                    </div>
+                                    <div class="col-6">
+                                        <a id="selesai" class="btn w-100 btn-block btn-primary mb-2">Selesai</a>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </form>
@@ -334,6 +342,11 @@
                 $('#sku_id').html(option);
             },
         });
+    }).on('click','#selesai',function(){
+        if($('#id').val() == ''){
+            errorMsg('Tipe dan keterangan belum tersimpan/tidak ada, simpan terlibh dahulu tipe & keterangan anda!');
+        }
+        location.href = '/detail-stok-masuk/'+$('#id').val();
     });
 
 </script>

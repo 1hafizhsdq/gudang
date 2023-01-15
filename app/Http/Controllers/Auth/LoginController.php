@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Helpers\CredentialApps;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
@@ -56,6 +57,12 @@ class LoginController extends Controller
     }
 
     public function loginApi(Request $request){
+        $sn = $request->getHttpHost();
+        $crd = CredentialApps::check($sn);
+        if($crd == false){
+            return back();
+        }
+        
         $res = Http::post('htk.test/api/login',[
             'headers' => [
                 'Authorization' => 'Bearer ',

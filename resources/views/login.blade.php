@@ -59,6 +59,10 @@
                                         <p class="text-center small">Enter your email & password to login</p>
                                     </div>
 
+                                    @if (Session::has('message'))
+                                        <div class="alert alert-danger">{{ Session::get('message') }}</div>
+                                    @endif
+
                                     <form class="row g-3 needs-validation" method="POST" action="{{ route('auth-login') }}">
                                         @csrf
                                         <div class="col-12">

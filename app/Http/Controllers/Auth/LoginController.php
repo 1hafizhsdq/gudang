@@ -56,7 +56,7 @@ class LoginController extends Controller
     }
 
     public function loginApi(Request $request){
-        $res = Http::post('http://127.0.0.1:8081/api/login',[
+        $res = Http::post('https://keu.miateknik.com/api/login',[
             'headers' => [
                 'Authorization' => 'Bearer ',
                 'Accept' => 'application/json',

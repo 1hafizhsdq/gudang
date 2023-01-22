@@ -1,0 +1,12 @@
+
+# RewriteEngine on
+# RewriteCond %{HTTP_HOST} ^keu\.miateknik\.com$
+# RewriteRule ^/?$ "https\:\/\/keu\.miateknik\.com\/public\/" [R=301,L]
+
+<IfModule mod_rewrite.c>
+   RewriteEngine On 
+   RewriteRule ^(.*)$ public/$1 [L]
+</IfModule>
+RewriteCond %{HTTP_HOST} ^gudang\.miateknik\.com$
+RewriteRule ^/?$ "http\:\/\/gudang\.miateknik\.com\/" [R=301,L]
+

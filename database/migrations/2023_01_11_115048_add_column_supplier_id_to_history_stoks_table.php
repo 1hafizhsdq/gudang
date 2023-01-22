@@ -14,7 +14,8 @@ return new class extends Migration
     public function up()
     {
         Schema::table('history_stoks', function (Blueprint $table) {
-            $table->string('no_surat_jalan')->nullable()->change();
+            $table->bigInteger('supplier_id')->nullable();
+            $table->bigInteger('client_id')->nullable();
         });
     }
 
@@ -26,6 +27,8 @@ return new class extends Migration
     public function down()
     {
         Schema::table('history_stoks', function (Blueprint $table) {
+            $table->dropColumn('supplier_id');
+            $table->dropColumn('client_id');
         });
     }
 };

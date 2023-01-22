@@ -13,8 +13,8 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('history_stoks', function (Blueprint $table) {
-            $table->string('no_surat_jalan')->nullable()->change();
+        Schema::table('users', function (Blueprint $table) {
+            $table->integer('kategori_admin')->nullable()->after('role');
         });
     }
 
@@ -25,7 +25,8 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('history_stoks', function (Blueprint $table) {
+        Schema::table('users', function (Blueprint $table) {
+            //
         });
     }
 };

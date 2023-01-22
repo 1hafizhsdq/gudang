@@ -24,16 +24,12 @@
                                     <h5 class="card-title">{{ $barang->nama_barang }}</h5>
                                     <div class="card-text">
                                         <div class="row">
-                                            <div class="col-lg-2 col-sm-4"><b>Kode</b></div>
-                                            <div class="col-10 col-sm-8">{{ $barang->kode_barang }}</div>
-                                        </div>
-                                        <div class="row">
                                             <div class="col-lg-2 col-sm-4"><b>Merk</b></div>
-                                            <div class="col-10 col-sm-8">{{ $barang->merk }}</div>
+                                            <div class="col-10 col-sm-8">{{ $barang->merk->merk }}</div>
                                         </div>
                                         <div class="row">
                                             <div class="col-lg-2 col-sm-4"><b>Type</b></div>
-                                            <div class="col-10 col-sm-8">{{ $barang->type }}</div>
+                                            <div class="col-10 col-sm-8">{{ $barang->type->type }}</div>
                                         </div>
                                         <div class="row">
                                             <div class="col-lg-2 col-sm-4"><b>Stok Total</b></div>
@@ -50,8 +46,7 @@
                                 <th scope="col">#</th>
                                 <th scope="col">SKU</th>
                                 <th scope="col">Varian</th>
-                                <th scope="col">Stok Baru</th>
-                                <th scope="col">Stok Bekas</th>
+                                <th scope="col">Stok</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -78,7 +73,6 @@
             { data: 'sku'},
             { data: 'varian'},
             { data: 'stok_baru'},
-            { data: 'stok_bekas'},
         ]
     });
 </script>

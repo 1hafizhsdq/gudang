@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Helpers\CredentialApps;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
@@ -56,7 +57,14 @@ class LoginController extends Controller
     }
 
     public function loginApi(Request $request){
+        $sn = $request->getHttpHost();
+        $crd = CredentialApps::check($sn);
+        if($crd == false){
+            return back();
+        }
+        
         $res = Http::post('https://keu.miateknik.com/api/login',[
+        // $res = Http::post('htk.test/api/login',[
             'headers' => [
                 'Authorization' => 'Bearer ',
                 'Accept' => 'application/json',
@@ -101,6 +109,7 @@ class LoginController extends Controller
                 'role' => $body->role,
                 'foto' => $body->foto,
                 'remember_token' => $token,
+                'kategori_admin' => $body->kategori_admin
             ]);
         }else{
             User::where('id',$user->id)->update([
@@ -111,6 +120,7 @@ class LoginController extends Controller
                 'role' => $user->role,
                 'foto' => $user->foto,
                 'remember_token' => $token,
+                'kategori_admin' => $body->kategori_admin
             ]);
         }
 

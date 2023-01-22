@@ -22,9 +22,17 @@
                         @csrf
                         <input type="hidden" name="id" id="id" value="{{ (!empty($barang)) ? $barang->id : '' }}">
                         <div class="row mb-3">
-                            <label for="kode_barang" class="col-sm-2 col-form-label">Kode Barang</label>
+                            <label for="merk" class="col-sm-2 col-form-label">Merk</label>
                             <div class="col-sm-10">
-                                <input type="text" class="form-control" name="kode_barang" name="kode_barang" value="{{ (!empty($barang)) ? $barang->kode_barang : '' }}">
+                                <select class="form-select select2" aria-label="Default select example" name="merk_id" id="merk_id">
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label for="type" class="col-sm-2 col-form-label">Type</label>
+                            <div class="col-sm-10">
+                                <select class="form-select select2" aria-label="Default select example" name="type_id" id="type_id">
+                                </select>
                             </div>
                         </div>
                         <div class="row mb-3">
@@ -42,18 +50,6 @@
                                         <option value="{{ $kt->id }}" {{ (!empty($barang)) ? ($barang->kategori_id == $kt->id) ? 'selected' : '' : '' }}>{{ $kt->kategori }}</option>
                                     @endforeach
                                 </select>
-                            </div>
-                        </div>
-                        <div class="row mb-3">
-                            <label for="merk" class="col-sm-2 col-form-label">Merk</label>
-                            <div class="col-sm-10">
-                                <input type="text" class="form-control" name="merk" name="merk" value="{{ (!empty($barang)) ? $barang->merk : '' }}">
-                            </div>
-                        </div>
-                        <div class="row mb-3">
-                            <label for="type" class="col-sm-2 col-form-label">Type</label>
-                            <div class="col-sm-10">
-                                <input type="text" class="form-control" name="type" name="type" value="{{ (!empty($barang)) ? $barang->type : '' }}">
                             </div>
                         </div>
                         <div class="row mb-3">
@@ -125,6 +121,7 @@
 <script src="{{ asset('select2') }}/dist/js/select2.min.js"></script>
 <script>
     $(document).ready(function() {
+        var listMerk = [];
         $('.select2').select2();
 
         $('#add-sku').click(function(){
@@ -138,6 +135,68 @@
                 $('.modal-title').html('Form Tambah SKU & Varian');
             }
         });
+
+        $('#merk_id').select2({
+            // tags: true,
+            // theme: 'bootstrap4',
+            allowClear: true,
+            placeholder: {
+                id: "",
+                placeholder: "Pilih Merk"
+            },
+            language: {
+                inputTooShort: function (args) {
+
+                    return "Masukkan lebih dari 2 karakter";
+                },
+                noResults: function () {
+                    return "Tidak Ditemukan.";
+                },
+                searching: function () {
+                    return "Mencari...";
+                }
+            },
+            minimumInputLength: 2,
+            ajax: {
+                url: "{{ url('find-merk') }}",
+                dataType: 'json',
+                type: "GET",
+                quietMillis: 50,
+                data: function(term) {
+                    return {
+                        term: term.term
+                    };
+                },
+                processResults: function (data) {
+                    return {
+                        results: $.map(data, function (item) {
+                            listMerk.push(item)
+                            return {
+                                text: item.merk,
+                                id: item.id
+                            }
+                        })
+                    };
+                }
+            }
+        });
+
+        $('#merk_id').change(function(){
+            var idmerk = $(this).val();
+            var type = "";
+            var arrType = [];
+            $('#type_id').html("")
+            $.each(listMerk, function(k,v) {
+                if(v.id == idmerk){
+                    arrType = v.type;
+                }
+            });
+            $.each(arrType, function(key,val) {
+                type += "<option value='"+val.id+"'>"+val.type+"</option>"
+            })
+            $('#type_id').html(type);
+        })
+
     }).on('click','#sv-sku',function(){
         var form = $('#form-sku'),
         data = form.serializeArray();

@@ -24,4 +24,16 @@ class Barang extends Model
     {
         return $this->hasMany(Sku::class);
     }
+
+    public function merk(){
+        return $this->belongsTo(Merk::class, 'merk_id');
+    }
+
+    public function type(){
+        return $this->belongsTo(Type::class, 'type_id');
+    }
+
+    public function stok(){
+        return $this->hasMany(Stok::class);
+    }
 }

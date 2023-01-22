@@ -4,13 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Models\HistoryStok;
 use App\Models\HistoryStokDetail;
+use App\Models\Transaksi;
+use App\Models\TransaksiDetail;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\Facades\DataTables;
-// use Barryvdh\DomPDF\PDF as PDF;
-use \PDF;
 
 class StokKeluarController extends Controller
 {
@@ -23,9 +24,9 @@ class StokKeluarController extends Controller
 
     public function listKeluar(){
         if(Auth::user()->role == 1){
-            $data = HistoryStok::with('user')->whereStatus('2')->whereMonth('tanggal',date('m'))->whereYear('tanggal', date('Y'))->orderBy('tanggal','desc')->get();
+            $data = Transaksi::with('user')->whereStatus('2')->whereMonth('tanggal',date('m'))->whereYear('tanggal', date('Y'))->orderBy('tanggal','desc')->get();
         }else{
-            $data = HistoryStok::with('user')->whereStatus('2')->whereUser_id(Auth::user()->id)->whereMonth('tanggal', date('m'))->whereYear('tanggal', date('Y'))->orderBy('tanggal','desc')->get();
+            $data = Transaksi::with('user')->whereStatus('2')->whereUser_id(Auth::user()->id)->whereMonth('tanggal', date('m'))->whereYear('tanggal', date('Y'))->orderBy('tanggal','desc')->get();
         }
         
         return DataTables::of($data)
@@ -46,9 +47,9 @@ class StokKeluarController extends Controller
     
     public function listKeluarFilter(Request $request){
         if(Auth::user()->role == 1){
-            $data = HistoryStok::with('user')->whereStatus('2');
+            $data = Transaksi::with('user')->whereStatus('2');
         }else{
-            $data = HistoryStok::with('user')->whereStatus('2')->whereUser_id(Auth::user()->id);
+            $data = Transaksi::with('user')->whereStatus('2')->whereUser_id(Auth::user()->id);
         }
 
         $bulan = join(",",$request->bulan);
@@ -76,18 +77,18 @@ class StokKeluarController extends Controller
 
     public function detail($id){
         $data['title'] = 'Stok Keluar';
-        $data['history'] = HistoryStok::with('user','project')->find($id);
-        $data['historyDetail'] = HistoryStokDetail::with('sku.barang.satuan')->whereHistory_id($id)->get();
+        $data['transaksi'] = Transaksi::with('user','project')->find($id);
+        $data['transaksiDetail'] = TransaksiDetail::with('sku.barang.satuan')->whereTransaksi_id($id)->get();
 
         return view('stok_keluar.detail',$data);
     }
 
     public function suratJalan(Request $request){
-        $data['data'] = HistoryStok::with('historyStokDetail.sku.barang.satuan','project','user')->find($request->id);
+        $data['data'] = Transaksi::with('transaksiDetail.sku.barang.satuan','project','user')->find($request->id);
         $data['kop'] = $request->kop;
 
         // return view('stok_keluar.suratjalan',$data);
-        $pdf = \PDF::loadview('stok_keluar.suratjalan', $data);
+        $pdf = Pdf::loadview('stok_keluar.suratjalan', $data)->setPaper('a4','landscape');
         return $pdf->download('suratjalan.pdf');
     }
 

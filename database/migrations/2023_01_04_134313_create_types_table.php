@@ -13,8 +13,13 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('history_stoks', function (Blueprint $table) {
-            $table->string('no_surat_jalan')->nullable()->change();
+        Schema::create('types', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedBigInteger('merk_id');
+            $table->string('type');
+            $table->timestamps();
+
+            $table->foreign('merk_id')->references('id')->on('merks');
         });
     }
 
@@ -25,7 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('history_stoks', function (Blueprint $table) {
-        });
+        Schema::dropIfExists('types');
     }
 };

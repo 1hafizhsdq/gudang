@@ -3,12 +3,23 @@
 namespace App\Http\Controllers;
 
 use App\Models\Barang;
+use App\Models\Client;
 use App\Models\HistoryStok;
 use App\Models\HistoryStokDetail;
+use App\Models\Lokasi;
+use App\Models\Merk;
 use App\Models\Project;
 use App\Models\Sku;
+use App\Models\Stok;
+use App\Models\Supplier;
+use App\Models\Transaksi;
+use App\Models\TransaksiDetail;
+use App\Models\Type;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Validator;
 
 class TransaksiController extends Controller
@@ -20,7 +31,29 @@ class TransaksiController extends Controller
         return view('transaksi.index',$data);
     }
 
-    public function store(Request $request){
+    public function indexMasuk(){
+        $data['title'] = "Transaksi Stok Masuk";
+        $data['merk'] = Merk::get();
+        $data['pic'] = User::get();
+        $data['project'] = Project::orderBy('id','desc')->get();
+        $data['supplier'] = Supplier::get();
+        $data['lokasi'] = Lokasi::get();
+
+        return view('transaksi.stok_masuk.index',$data);
+    }
+
+    public function indexKeluar(){
+        $data['title'] = "Transaksi Stok Keluar";
+        $data['merk'] = Merk::get();
+        $data['pic'] = User::get();
+        $data['project'] = Project::orderBy('id','desc')->get();
+        $data['lokasi'] = Lokasi::get();
+        $data['client'] = Client::get();
+
+        return view('transaksi.stok_keluar.index',$data);
+    }
+
+    public function storeOld(Request $request){
         $validator = Validator::make($request->all(), [
             'status' => 'required',
             'keterangan' => 'required',
@@ -72,6 +105,64 @@ class TransaksiController extends Controller
         }
     }
 
+    public function store(Request $request){
+        $validator = Validator::make($request->all(), [
+            'status' => 'required',
+            'keterangan' => 'required',
+            'user_id' => 'required',
+            'tanggal' => 'required',
+            'no_surat_jalan' => 'required',
+        ], [
+            'status.required' => 'Tipe tidak boleh kosong!',
+            'keterangan.required' => 'Keterangan tidak boleh kosong!',
+            'user_id.required' => 'PIC tidak boleh kosong!',
+            'tanggal.required' => 'Tanggal tidak boleh kosong!',
+            'no_surat_jalan.required' => 'No Surat Jalan tidak boleh kosong!',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()->all()]);
+        }
+
+        $data = [
+            'tanggal' =>$request->tanggal,
+            'user_id' => $request->user_id,
+            'status' => $request->status,
+            'keterangan' => $request->keterangan,
+            'deskripsi' => $request->deskripsi,
+            'no_surat_jalan' => $request->no_surat_jalan,
+            'asal_tujuan' => $request->asal_tujuan
+        ];
+
+        if($request->asal_tujuan == 1){
+            try {
+                Project::updateOrCreate(['id' => $request->project],['id' => $request->project,'nama_project' => $request->nama_project]);
+            } catch (\Throwable $th) {
+                return response()->json(['error' => 'Terjadi Kesalahan, gagal menyimpan data! '.$th->message]);
+            }
+            $data = array_merge($data,['project_id' => $request->project]);
+        }elseif($request->asal_tujuan == 2){
+            $data = array_merge($data,['supplier_id' => $request->supplier]);
+        }elseif($request->asal_tujuan == 3){
+            $data = array_merge($data,['client_id' => $request->client]);
+        }
+
+        if($request->status == 2){
+            $data = array_merge($data,[
+                'driver' => $request->driver,
+                'nopol' => $request->nopol,
+                'penerima' => $request->penerima,
+            ]);
+        }
+
+        try {
+            $transaksi = Transaksi::updateOrCreate(['id' => $request->id],$data);
+            return response()->json(['success' => 'Berhasil menyimpan data!', 'id' => $transaksi->id]);
+        } catch (\Throwable $th) {
+            return response()->json(['error' => 'Terjadi Kesalahan, gagal menyimpan data!']);
+        }
+    }
+
     public function getSku($id){
         $data = Sku::where('barang_id',$id)->get();
 
@@ -79,12 +170,118 @@ class TransaksiController extends Controller
     }
     
     public function getStok($id){
-        $data = Sku::find($id);
+        // $data = Sku::find($id);
+        $data = Stok::where('sku_id',$id)->whereNotNull('lokasi_id')->sum('stok');
 
         return response()->json($data);
     }
     
+    public function getStokByLokasi($skuid,$lokasiid){
+        // $data = Sku::find($id);
+        $data = Stok::where('sku_id',$skuid)->where('lokasi_id',$lokasiid)->whereNotNull('lokasi_id')->sum('stok');
+
+        return response()->json($data);
+    }
+    
+    public function getType($id){
+        $data = Type::where('merk_id',$id)->get();
+
+        return response()->json($data);
+    }
+    
+    public function getBarang($idmerk,$idtype){
+        $data = Barang::with('sku')->where('merk_id',$idmerk)->where('type_id',$idtype)->first();
+
+        return response()->json($data);
+    }
+
     public function storeBarang(Request $request){
+        $validator = Validator::make($request->all(), [
+            'barang_id' => 'required',
+            'sku_id' => 'required',
+            'stok' => 'required',
+        ], [
+            'barang_id.required' => 'Barang tidak boleh kosong!',
+            'sku_id.required' => 'SKU Varian tidak boleh kosong!',
+            'stok.required' => 'Stok tidak boleh kosong!',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['errors' => $validator->errors()->all()]);
+        }
+
+        try {
+            TransaksiDetail::create([
+                'transaksi_id' => $request->transaksi_id,
+                'barang_id' => $request->barang_id,
+                'sku_id' => $request->sku_id,
+                'lokasi_id' => $request->lokasi_id,
+                'qty' => $request->stok
+            ]);
+        } catch (\Throwable $th) {
+            return response()->json(['error' => 'Terjadi Kesalahan, gagal menyimpan data! '.$th->message]);
+        }
+
+        if($request->status_tipe == 1){
+            Stok::updateOrCreate(
+                [
+                    'barang_id' => $request->barang_id,
+                    'sku_id' => $request->sku_id,
+                    'project_id' => 0,
+                    'lokasi_id' => $request->lokasi_id
+                ],
+                [
+                    'stok' => DB::raw('stok+'.$request->stok)
+                ]
+            );
+
+            Sku::updateOrCreate(
+                ['id' => $request->sku_id, 'barang_id' => $request->barang_id],
+                ['stok_baru' => DB::raw('stok_baru+'.$request->stok)]
+            );
+
+            $jmlStok = Stok::where('barang_id',$request->barang_id)->sum('stok');
+            Barang::where('id',$request->barang_id)->update([
+                'stok_total' => $jmlStok
+            ]);
+        }else{
+            if($request->asal_tujuan == 1){
+                $project = $request->project;
+                $lokasi = 0;
+            }else{
+                $project = 0;
+                $lokasi = $request->lokasi_id;
+            }
+
+            Stok::updateOrCreate(
+                [
+                    'barang_id' => $request->barang_id,
+                    'sku_id' => $request->sku_id,
+                    'project_id' => $project,
+                    'lokasi_id' => $lokasi
+                ],
+                [
+                    'stok' => DB::raw('stok-'.$request->stok)
+                ]
+            );
+
+            Sku::updateOrCreate(
+                ['id' => $request->sku_id, 'barang_id' => $request->barang_id],
+                ['stok_baru' => DB::raw('stok_baru-'.$request->stok)]
+            );
+
+            $jmlStok = Stok::where('barang_id',$request->barang_id)->sum('stok');
+            Barang::where('id',$request->barang_id)->update([
+                'stok_total' => $jmlStok
+            ]);
+        }
+
+        $tbl = TransaksiDetail::with('sku.barang','lokasi')->where('transaksi_id',$request->transaksi_id)->get();
+
+        return response()->json(['success' => 'Berhasil menyimpan data!','tbl' => $tbl]);
+    }
+    
+    public function storeBarangOld(Request $request){
         $validator = Validator::make($request->all(), [
             'barang_id' => 'required',
             'sku_id' => 'required',
@@ -137,6 +334,20 @@ class TransaksiController extends Controller
 
         $contents = view(($id == 1) ? 'transaksi.masuk' :'transaksi.keluar', $data)->render();
         return response()->json(['content' => $contents]);
+    }
+
+    public function getProject(){
+        try {
+            $res = Http::withHeaders([
+                'Authorization' =>  'Bearer ' . Auth::user()->remember_token,
+                'Content-Type' => 'application/json' 
+            ])->get('htk.test/api/project-list');
+        } catch (\Throwable $th) {
+            return 'Terjadi Kesalahan';
+        }
+        $data = json_decode($res->body(),true);
+
+        return response()->json($data['data']);
     }
 
     public function getRomawi($bln){

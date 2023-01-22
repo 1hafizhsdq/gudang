@@ -13,8 +13,14 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('history_stoks', function (Blueprint $table) {
-            $table->string('no_surat_jalan')->nullable()->change();
+        Schema::create('clients', function (Blueprint $table) {
+            $table->id();
+            $table->string('kode_client')->nullable();
+            $table->date('tgl_terdaftar')->nullable();
+            $table->string('nama');
+            $table->string('telp');
+            $table->text('alamat');
+            $table->timestamps();
         });
     }
 
@@ -25,7 +31,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('history_stoks', function (Blueprint $table) {
-        });
+        Schema::dropIfExists('clients');
     }
 };

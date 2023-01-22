@@ -6,7 +6,7 @@
                 <span>Dashboard</span>
             </a>
         </li>
-        @if (Auth::user()->role == 1 || Auth::user()->role == 2)
+        @if (Auth::user()->kategori_admin == 1)
         <li class="nav-item">
             <a class="nav-link collapsed" data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
                 <i class="bi bi-menu-button-wide"></i><span>Data Master</span><i class="bi bi-chevron-down ms-auto"></i>
@@ -37,14 +37,51 @@
                         <i class="bi bi-circle"></i><span>Barang</span>
                     </a>
                 </li>
+                <li>
+                    <a class="nav-link {{ ($title == 'Merk') ? '' : 'collapsed' }}" href="{{ url('merk') }}">
+                        <i class="bi bi-circle"></i><span>Merk</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="nav-link {{ ($title == 'Type') ? '' : 'collapsed' }}" href="{{ url('type') }}">
+                        <i class="bi bi-circle"></i><span>Type</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="nav-link {{ ($title == 'Lokasi') ? '' : 'collapsed' }}" href="{{ url('lokasi') }}">
+                        <i class="bi bi-circle"></i><span>Lokasi</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="nav-link {{ ($title == 'Client') ? '' : 'collapsed' }}" href="{{ url('client') }}">
+                        <i class="bi bi-circle"></i><span>Client</span>
+                    </a>
+                </li>
             </ul>
         </li><!-- End Components Nav -->
         @endif
-        <li class="nav-item">
+        {{-- <li class="nav-item">
             <a class="nav-link {{ ($title == 'Transaksi Stok') ? '' : 'collapsed' }}" href="{{ url('tr-stok') }}">
                 <i class="bi bi-cart"></i>
                 <span>Transaksi Stok</span>
             </a>
+        </li> --}}
+        <li class="nav-item">
+            <a class="nav-link collapsed" data-bs-target="#transaksi-nav" data-bs-toggle="collapse" href="#">
+                <i class="bi bi-cart"></i><span>Transaksi Stok</span><i class="bi bi-chevron-down ms-auto"></i>
+            </a>
+            <ul id="transaksi-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+                <li>
+                    <a class="nav-link {{ ($title == 'Transaksi Stok Masuk') ? '' : 'collapsed' }}" href="{{ url('tr-stok-masuk') }}">
+                        <i class="bi bi-circle"></i><span>Transaksi Stok Masuk</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="nav-link {{ ($title == 'Transaksi Stok Keluar') ? '' : 'collapsed' }}" href="{{ url('tr-stok-keluar') }}">
+                        <i class="bi bi-circle"></i><span>Transaksi Stok Keluar</span>
+                    </a>
+                </li>
+            </ul>
         </li>
         <li class="nav-item">
             <a class="nav-link {{ ($title == 'Cek Stok') ? '' : 'collapsed' }}" href="{{ url('cek-stok') }}">
@@ -53,6 +90,25 @@
             </a>
         </li>
         <li class="nav-item">
+            <a class="nav-link collapsed" data-bs-target="#laporan-transaksi-nav" data-bs-toggle="collapse" href="#">
+                <i class="bi bi-cart"></i><span>Laporan Transaksi</span><i class="bi bi-chevron-down ms-auto"></i>
+            </a>
+            <ul id="laporan-transaksi-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+                <li>
+                    <a class="nav-link {{ ($title == 'Stok Masuk') ? '' : 'collapsed' }}" href="{{ url('stok-masuk') }}">
+                        <i class="bi bi-arrows-angle-contract"></i>
+                        <span>Stok Masuk</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="nav-link {{ ($title == 'Stok Keluar') ? '' : 'collapsed' }}" href="{{ url('stok-keluar') }}">
+                        <i class="bi bi-arrows-angle-expand"></i>
+                        <span>Stok Keluar</span>
+                    </a>
+                </li>
+            </ul>
+        </li>
+        {{-- <li class="nav-item">
             <a class="nav-link {{ ($title == 'Stok Masuk') ? '' : 'collapsed' }}" href="{{ url('stok-masuk') }}">
                 <i class="bi bi-arrows-angle-contract"></i>
                 <span>Stok Masuk</span>
@@ -63,7 +119,7 @@
                 <i class="bi bi-arrows-angle-expand"></i>
                 <span>Stok Keluar</span>
             </a>
-        </li>
+        </li> --}}
         {{-- <li class="nav-item">
             <a class="nav-link collapsed" data-bs-target="#laporan-nav" data-bs-toggle="collapse" href="#">
                 <i class="bi bi-clipboard-data"></i><span>Laporan</span><i class="bi bi-chevron-down ms-auto"></i>

@@ -17,14 +17,16 @@
       }
       
       a {
-      color: #0087C3;
+      color: #555555;
       text-decoration: none;
       }
       
       body {
       position: relative;
-      width: 19cm;
-      height: 29.7cm;
+      /* width: 19cm;
+      height: 29.7cm; */
+      width: 24cm;
+      height: 28cm;
       margin: 0 auto;
       color: #555555;
       background: #FFFFFF;
@@ -70,7 +72,7 @@
       
       h2.name {
       font-size: 1.4em;
-      font-weight: normal;
+      font-weight: bold;
       margin: 0;
       }
       
@@ -173,6 +175,7 @@
       }
 
       table thead tr th{
+        font-weight: bold;
         background-color: #dfdfdf;
         color: #07090a;
       }
@@ -212,15 +215,23 @@
         @else
           <h2 class="name">PT. Haisa Tata Karya</h2>
         @endif
-        <div>Jl. Desa Balong Pandan RT/RW 007/002 Jogosatru<br>Sukodono Sidoarjo - 61258</div>
+        {{-- <div>Jl. Desa Balong Pandan RT/RW 007/002 Jogosatru<br>Sukodono Sidoarjo - 61258</div> --}}
+        <div>Jalan Raya Pasar Legi Dusun Ketawang Jogosatru<br>Sukodono Sidoarjo - 61258</div>
         <div>(031) 99893526</div>
-        <div><a href="mailto:miateknikindonesia@gmail.com">miateknikindonesia@gmail.com</a></div>
-        <div><a href="mailto:haisatatakarya@gmail.com">haisatatakarya@gmail.com</a></div>
+        <div><a class="link" href="mailto:miateknikindonesia@gmail.com">miateknikindonesia@gmail.com</a></div>
+        <div><a class="link" href="mailto:haisatatakarya@gmail.com">haisatatakarya@gmail.com</a></div>
       </div>
       <div id="company" style="margin-top: 10%">
         <div>{{ date('d/m/Y',strtotime($data->tanggal)) }}</div>
-        <div>Kepada Yth. {{ $data->project->nama_perusahaan }}</div>
-        <div>{{ $data->project->nama_project }}</div>
+        <div>
+          Kepada Yth. 
+          @if ($data->asal_tujuan == 1)
+              {{ $data->project->nama_project }}
+          @elseif ($data->asal_tujuan == 3)
+              {{ $data->client->nama }}
+          @endif
+        </div>
+        {{-- <div>{{ $data->project->nama_project }}</div> --}}
       </div>
       </div>
     </header>
@@ -244,13 +255,13 @@
           </tr>
         </thead>
         <tbody>
-          @foreach ($data->historyStokDetail as $hd)
+          @foreach ($data->transaksiDetail as $td)
             <tr>
               <td style="border: 1px solid;">{{ $loop->iteration }}</td>
-              <td style="border: 1px solid;">{{ $hd->sku->barang->nama_barang }}, {{ $hd->sku->varian }}</td>
-              <td style="border: 1px solid;">{{ $hd->stok_baru + $hd->stok_bekas }}</td>
-              <td style="border: 1px solid;">{{ $hd->sku->barang->satuan->satuan }}</td>
-              <td style="border: 1px solid;">{{ $hd->keterangan }}</td>
+              <td style="border: 1px solid;">{{ $td->sku->barang->nama_barang }}, {{ $td->sku->varian }}</td>
+              <td style="border: 1px solid;">{{ $td->qty }}</td>
+              <td style="border: 1px solid;">{{ $td->sku->barang->satuan->satuan }}</td>
+              <td style="border: 1px solid;">{{ $td->keterangan }}</td>
             </tr>
           @endforeach
         </tbody>

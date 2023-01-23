@@ -21,7 +21,7 @@ class CekStokController extends Controller
 
     public function listBarang($idgudang)
     {
-        $gudang = Stok::where('project_id',$idgudang)->pluck('id');
+        $gudang = Stok::where('project_id',$idgudang)->pluck('barang_id');
         $data = Barang::with('kategori','satuan','merk','type')->whereIn('id',$gudang)->get();
 
         return DataTables::of($data)
@@ -70,7 +70,7 @@ class CekStokController extends Controller
             $res = Http::withHeaders([
                 'Authorization' =>  'Bearer ' . Auth::user()->remember_token,
                 'Content-Type' => 'application/json' 
-            ])->get('htk.test/api/project-list');
+            ])->get('keu.miateknik.com/api/project-list');
         } catch (\Throwable $th) {
             return 'Terjadi Kesalahan';
         }

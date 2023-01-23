@@ -73,7 +73,7 @@
                                     <td>{{ $loop->iteration }}</td>
                                     <td>{{ $td->sku->barang->merk->merk }} {{ $td->sku->barang->type->type }} {{ $td->sku->barang->nama_barang }}</td>
                                     <td>{{ $td->sku->sku }} {{ $td->sku->varian }}</td>
-                                    <td>{{ $td->qty }} {{ $td->sku->barang->satuan->satuan }}</td>
+                                    <td>{{ floatval($td->qty) }} {{ $td->sku->barang->satuan->satuan }}</td>
                                     <td>{{ $td->lokasi->lokasi }}</td>
                                 </tr>
                             @endforeach

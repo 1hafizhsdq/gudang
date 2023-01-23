@@ -340,8 +340,8 @@ class TransaksiController extends Controller
         try {
             $res = Http::withHeaders([
                 'Authorization' =>  'Bearer ' . Auth::user()->remember_token,
-                'Content-Type' => 'application/json' 
-            ])->get('htk.test/api/project-list');
+                'Content-Type' => 'application/json',
+            ])->get('keu.miateknik.com/api/project-list');
         } catch (\Throwable $th) {
             return 'Terjadi Kesalahan';
         }

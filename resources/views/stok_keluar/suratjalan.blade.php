@@ -259,7 +259,7 @@
             <tr>
               <td style="border: 1px solid;">{{ $loop->iteration }}</td>
               <td style="border: 1px solid;">{{ $td->sku->barang->nama_barang }}, {{ $td->sku->varian }}</td>
-              <td style="border: 1px solid;">{{ $td->qty }}</td>
+              <td style="border: 1px solid;">{{ floatval($td->qty) }}</td>
               <td style="border: 1px solid;">{{ $td->sku->barang->satuan->satuan }}</td>
               <td style="border: 1px solid;">{{ $td->keterangan }}</td>
             </tr>

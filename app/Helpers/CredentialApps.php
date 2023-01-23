@@ -8,8 +8,7 @@ use Illuminate\Support\Facades\Session;
 
 class CredentialApps {
     public static function check($data){
-        $serial = '$2y$10$oanWAwF3j7C/.Wze98DLb.NqtptMA5eJRYbUu5AKHnHb6m3oY0i8W';
-        // $serial = '$2y$10$foQvSBCmzQoQdSqiHwVYWek34PpdIplrX5Zkw3zBAdnbahnhrNDKa';
+        $serial = '$2y$10$JYVKEixzeVbj.Xfqif8CaeEgdpX6fjJX6N7lyOHL.F2TGg7.XzH/W';
         if(!Hash::check($data,$serial)){
             Session::flash('message', 'Serial Number expired, please contact developer to activation your serial number!');
             return false;
